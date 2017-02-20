@@ -22,10 +22,13 @@ Then move private key to .ssh folder.
 Log into server.
 
 ```bash
-mv ~/udacity_key.rsa ~/.ssh/
+mv ~/Downloads/udacity_key.rsa ~/.ssh/
 chmod 600 ~/.ssh/udacity_key.rsa
-ssh -i ~/.ssh/udacity_key.rsa root@52.37.193.113
+ssh -i ~/.ssh/udacity_key.rsa root@35.167.171.164
+
 ```
+
+## Create a new user called grader
 
 
 
