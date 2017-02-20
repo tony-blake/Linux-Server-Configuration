@@ -16,6 +16,16 @@ Description
 ## Obtain access to virtual server
 
 Sign into your udacity account and go to this part of the website https://www.udacity.com/account#!/development_environment.
+Click on create development environment.
+Click on the download link to obtain private key.
+Then move private key to .ssh folder.
+Log into server.
+
+```bash
+mv ~/udacity_key.rsa ~/.ssh/
+chmod 600 ~/.ssh/udacity_key.rsa
+ssh -i ~/.ssh/udacity_key.rsa root@52.37.193.113
+```
 
 
 
