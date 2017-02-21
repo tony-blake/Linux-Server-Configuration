@@ -30,7 +30,33 @@ ssh -i ~/.ssh/udacity_key.rsa root@35.167.171.164
 
 ## Create a new user called grader
 
+```bash
+sudo adduser grader
 
+```
+
+
+Change the ssh-config file so that grader has the permission to use sudo.
+
+```bash
+sudo visudo
+```
+The file opnes in nano and you can insert the line ```bash grader ALL=(ALL:ALL) ALL ``` under  ``` "#User privilege specification" ``` underneath ```bash root ALL=(ALL:ALL) ALL ``` . Then save file by hitting ``` ctrl + x ``` and selecting Yes.
+
+## unable to resolve host warning
+
+When Running the sudo command initially a warning appears.  This is because the host ip address is not listed in the ```bash /etc/hosts ``` file
+
+```bash
+root@ip-10-20-24-62:~# sudo visudo
+sudo: unable to resolve host ip-10-20-24-62
+
+```
+To address the complaint the host ip address (in this case ```bash ip-10-20-24-62 ```) needs to be added to top of the ```bash /etc/hosts ``` file in the following way
+
+```bash
+127.0.0.1 localhost ip-10-20-24-62 
+```
 
 
 
