@@ -8,7 +8,7 @@ Description
 
 ## Information for Grader
 
-* IP address - 52.11.131.68
+* IP address - 54.68.3.20
 * Port - 2200
 * URL -
 
@@ -24,7 +24,7 @@ Log into server.
 ```bash
 mv ~/Downloads/udacity_key.rsa ~/.ssh/
 chmod 600 ~/.ssh/udacity_key.rsa
-ssh -i ~/.ssh/udacity_key.rsa root@52.11.131.68
+ssh -i ~/.ssh/udacity_key.rsa root@54.68.3.20
 
 ```
 
@@ -119,59 +119,38 @@ The key's randomart image is:
 |++E .            |
 +-----------------+
 Macintosh-109add6f31eb:~ tonyblake$ 
-Then staying logged in as root configure firewalls
+```
+
+Then log into grader account ```ssh -v grader@54.68.3.20 -p 2200 ```
+where password is "Passw0rd" 
+
+## Authorize and set permssions
+
+Create .ssh directory ```mkdir .ssh```
+Create empty file to store key ``` bash .ssh/authorized_keys ```
+On local machine read contents of the public key ```cat .ssh/rsa_id.pub```
+Copy the key and paste into the authorized_keys file in grader ```vim .ssh/authorized_keys``` 
+Set permissions for files: ```chmod 700 .ssh```  and ```chmod 644 .ssh/authorized_keys```
+Change ```PasswordAuthentication``` from ```yes``` back to ```no```. vim /etc/ssh/sshd_config
+save file(nano: ctrl+x, Y, Enter)
+login with key pair: ```ssh -v grader@54.68.3.20 -p 2200 -i ~/.ssh/id_rsa```
+
+
 
 ```bash
-root@ip-10-20-41-235:~# sudo ufw status
-Status: inactive
-root@ip-10-20-41-235:~# sudo ufw default allow outgoing
-Default outgoing policy changed to 'allow'
-(be sure to update your rules accordingly)
-root@ip-10-20-41-235:~# sudo ufw default deny incoming
-Default incoming policy changed to 'deny'
-(be sure to update your rules accordingly)
-root@ip-10-20-41-235:~# sudo ufw allow 2200/tcp
-Rules updated
-Rules updated (v6)
-root@ip-10-20-41-235:~# sudo ufw allow www
-Rules updated
-Rules updated (v6)
-root@ip-10-20-41-235:~# sudo ufw allow ssh
-Rules updated
-Rules updated (v6)
-root@ip-10-20-41-235:~# sudo ufw allow 80/tcp
-Skipping adding existing rule
-Skipping adding existing rule (v6)
-root@ip-10-20-41-235:~# sudo ufw allow 123/udp
-Rules updated
-Rules updated (v6)
-root@ip-10-20-41-235:~# sudo ufw allow 80/tcp
-Skipping adding existing rule
-Skipping adding existing rule (v6)
-root@ip-10-20-41-235:~# sudo ufw enable
-Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
-Firewall is active and enabled on system startup
-root@ip-10-20-41-235:~# sudo ufw status
-Status: active
-
-To                         Action      From
---                         ------      ----
-2200/tcp                   ALLOW       Anywhere
-80/tcp                     ALLOW       Anywhere
-22                         ALLOW       Anywhere
-123/udp                    ALLOW       Anywhere
-2200/tcp (v6)              ALLOW       Anywhere (v6)
-80/tcp (v6)                ALLOW       Anywhere (v6)
-22 (v6)                    ALLOW       Anywhere (v6)
-123/udp (v6)               ALLOW       Anywhere (v6)
-
-root@ip-10-20-41-235:~# 
-
-
+grader@ip-10-20-36-35:~$ mkdir .ssh
+grader@ip-10-20-36-35:~$ vim .ssh/authorized_keys
+grader@ip-10-20-36-35:~$ vim .ssh/authorized_keys
+grader@ip-10-20-36-35:~$ chmod 700 .ssh
+grader@ip-10-20-36-35:~$ chmod 644 .ssh/authorized_keys
+grader@ip-10-20-36-35:~$ vim /etc/ssh/sshd_config
+grader@ip-10-20-36-35:~$ sudo vim /etc/ssh/sshd_config
+[sudo] password for grader: 
+grader@ip-10-20-36-35:~$ exit
+logout
 ```
 
 
-```
  
 
 
