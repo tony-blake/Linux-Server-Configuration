@@ -57,7 +57,7 @@ Change the ssh-config file so that grader has the permission to use sudo.
 ```bash
 sudo visudo
 ```
-The file opnes in nano and you can insert the line ```bash grader ALL=(ALL:ALL) ALL ``` under  ``` "#User privilege specification" ``` underneath ```bash root ALL=(ALL:ALL) ALL ``` . Then save file by hitting ``` ctrl + x ``` and selecting Yes.
+The file opnes in nano and you can insert the line ```grader ALL=(ALL:ALL) ALL ``` under  ``` "#User privilege specification" ``` underneath ```root ALL=(ALL:ALL) ALL ``` . Then save file by hitting ``` ctrl + x ``` and selecting Yes.
 
 ## unable to resolve host warning
 
