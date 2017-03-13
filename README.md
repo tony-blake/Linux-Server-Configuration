@@ -82,6 +82,43 @@ To update all packages use
 sudo apt-get update
 sudo apt-get upgrade
 ```
+## Change the SSH port from 22 to 2200 and reconfigure authetications
+```bash
+vim /etc/ssh/sshd_config
+```
+Then change ```Port 22``` to ```Port 2200```
+Change ```PasswordAuthetication yes``` to ```PasswordAuthetication no```
+And change ```PermitRootLogin without-password``` to ```PermitRootLogin no```
+Then append ```AllowUsers grader``` to end of file
+Lastly run ```sudo service ssh restart``` for changes to take effect
+
+## Create SSH keys and copy to server.
+
+On local machine generate SSH key pair by running command ``` ssh-keygen ```
+
+```bash
+Macintosh-109add6f31eb:~ tonyblake$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /Users/tonyblake/.ssh/id_rsa.
+Your public key has been saved in /Users/tonyblake/.ssh/id_rsa.pub.
+The key fingerprint is:
+f4:61:fa:47:91:7a:86:e8:72:29:0a:85:86:ee:e9:da tonyblake@Macintosh-109add6f31eb.local
+The key's randomart image is:
++--[ RSA 2048]----+
+|                 |
+|             .   |
+|        . o o    |
+| . .   . = + .   |
+|. o .   S + +    |
+|.. .   . o +     |
+| ..   o + . .    |
+|.... . +   .     |
+|++E .            |
++-----------------+
+Macintosh-109add6f31eb:~ tonyblake$ 
 Then staying logged in as root configure firewalls
 
 ```bash
@@ -133,45 +170,7 @@ root@ip-10-20-41-235:~#
 
 ```
 
-## Change the SSH port from 22 to 2200 and reconfigure authetications
-```bash
-vim /ssh/sshd_config
-```
-Then change ```Port 22``` to ```Port 2200```
-Change ```PasswordAuthetication yes``` to ```PasswordAuthetication no```
-And change ```PermitRootLogin without-password``` to ```PermitRootLogin no```
-Then append ```AllowUsers grader``` to end of file
-Lastly run ```sudo service ssh restart``` for changes to take effect
 
-## Create SSH keys and copy to server.
-
-On local machine generate SSH key pair by running command ``` ssh-keygen ```
-
-```bash
-Macintosh-109add6f31eb:~ tonyblake$ ssh-keygen
-Generating public/private rsa key pair.
-Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa
-/Users/tonyblake/.ssh/id_rsa already exists.
-Overwrite (y/n)? y
-Enter passphrase (empty for no passphrase):Passw0rd1 
-Enter same passphrase again:Passw0rd1 
-Your identification has been saved in /Users/tonyblake/.ssh/id_rsa.
-Your public key has been saved in /Users/tonyblake/.ssh/id_rsa.pub.
-The key fingerprint is:
-40:84:5d:22:b2:fe:19:d3:19:2d:30:2f:ca:2e:ff:5f tonyblake@Macintosh-109add6f31eb.local
-The key's randomart image is:
-+--[ RSA 2048]----+
-|  . +++..        |
-|   o.*.o         |
-|  . . = .        |
-| o . o =         |
-|  + o o S        |
-| . . +           |
-|. . o   E        |
-| o     .         |
-|  .....          |
-+-----------------+
-Macintosh-109add6f31eb:~ tonyblake$
 ```
  
 
