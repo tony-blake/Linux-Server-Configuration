@@ -8,7 +8,7 @@ Description
 
 ## Information for Grader
 
-* IP address - 35.167.171.164
+* IP address - 52.11.131.68
 * Port - 2200
 * URL -
 
@@ -24,7 +24,7 @@ Log into server.
 ```bash
 mv ~/Downloads/udacity_key.rsa ~/.ssh/
 chmod 600 ~/.ssh/udacity_key.rsa
-ssh -i ~/.ssh/udacity_key.rsa root@35.167.171.164
+ssh -i ~/.ssh/udacity_key.rsa root@52.11.131.68
 
 ```
 
