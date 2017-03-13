@@ -85,127 +85,51 @@ sudo apt-get upgrade
 Then staying logged in as root configure firewalls and then log out
 
 ```bash
-root@ip-10-20-24-62:~# sudo ufw status
+root@ip-10-20-41-235:~# sudo ufw status
 Status: inactive
-root@ip-10-20-24-62:~# sudo ufw allow ssh
-Rules updated
-Rules updated (v6)
-root@ip-10-20-24-62:~# sudo ufw allow 2222/tcp
-Rules updated
-Rules updated (v6)
-root@ip-10-20-24-62:~# sudo ufw allow 2200/tcp
-Rules updated
-Rules updated (v6)
-root@ip-10-20-24-62:~# sudo ufw enable
-Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
-Firewall is active and enabled on system startup
-root@ip-10-20-24-62:~# sudo ufw allow www
-Rule added
-Rule added (v6)
-root@ip-10-20-24-62:~# sudo ufw enable
-Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
-Firewall is active and enabled on system startup
-root@ip-10-20-24-62:~# sudo ufw status
-Status: active
-
-To                         Action      From
---                         ------      ----
-22                         ALLOW       Anywhere
-2222/tcp                   ALLOW       Anywhere
-2200/tcp                   ALLOW       Anywhere
-80/tcp                     ALLOW       Anywhere
-22 (v6)                    ALLOW       Anywhere (v6)
-2222/tcp (v6)              ALLOW       Anywhere (v6)
-2200/tcp (v6)              ALLOW       Anywhere (v6)
-80/tcp (v6)                ALLOW       Anywhere (v6)
-
-root@ip-10-20-24-62:~# vim /etc/ssh/sshd_config
-root@ip-10-20-24-62:~# sudo service ssh reload
-root@ip-10-20-24-62:~# sudo ufw allow ntp
-Rule added
-Rule added (v6)
-root@ip-10-20-24-62:~# 
-root@ip-10-20-24-62:~# sudo ufw default allow outgoing
+root@ip-10-20-41-235:~# sudo ufw default allow outgoing
 Default outgoing policy changed to 'allow'
 (be sure to update your rules accordingly)
-root@ip-10-20-24-62:~# sudo ufw enable
-Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
-Firewall is active and enabled on system startup
-root@ip-10-20-24-62:~# sudo ufw status
-Status: active
-
-To                         Action      From
---                         ------      ----
-22                         ALLOW       Anywhere
-2222/tcp                   ALLOW       Anywhere
-2200/tcp                   ALLOW       Anywhere
-80/tcp                     ALLOW       Anywhere
-123                        ALLOW       Anywhere
-22 (v6)                    ALLOW       Anywhere (v6)
-2222/tcp (v6)              ALLOW       Anywhere (v6)
-2200/tcp (v6)              ALLOW       Anywhere (v6)
-80/tcp (v6)                ALLOW       Anywhere (v6)
-123 (v6)                   ALLOW       Anywhere (v6)
-
-root@ip-10-20-24-62:~# sudo ufw default deny incoming
+root@ip-10-20-41-235:~# sudo ufw default deny incoming
 Default incoming policy changed to 'deny'
 (be sure to update your rules accordingly)
-root@ip-10-20-24-62:~# sudo ufw enable
+root@ip-10-20-41-235:~# sudo ufw allow 2200/tcp
+Rules updated
+Rules updated (v6)
+root@ip-10-20-41-235:~# sudo ufw allow www
+Rules updated
+Rules updated (v6)
+root@ip-10-20-41-235:~# sudo ufw allow ssh
+Rules updated
+Rules updated (v6)
+root@ip-10-20-41-235:~# sudo ufw allow 80/tcp
+Skipping adding existing rule
+Skipping adding existing rule (v6)
+root@ip-10-20-41-235:~# sudo ufw allow 123/udp
+Rules updated
+Rules updated (v6)
+root@ip-10-20-41-235:~# sudo ufw allow 80/tcp
+Skipping adding existing rule
+Skipping adding existing rule (v6)
+root@ip-10-20-41-235:~# sudo ufw enable
 Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
 Firewall is active and enabled on system startup
-root@ip-10-20-24-62:~# sudo ufw status
+root@ip-10-20-41-235:~# sudo ufw status
 Status: active
 
 To                         Action      From
 --                         ------      ----
-22                         ALLOW       Anywhere
-2222/tcp                   ALLOW       Anywhere
 2200/tcp                   ALLOW       Anywhere
 80/tcp                     ALLOW       Anywhere
-123                        ALLOW       Anywhere
-22 (v6)                    ALLOW       Anywhere (v6)
-2222/tcp (v6)              ALLOW       Anywhere (v6)
-2200/tcp (v6)              ALLOW       Anywhere (v6)
-80/tcp (v6)                ALLOW       Anywhere (v6)
-123 (v6)                   ALLOW       Anywhere (v6)
-
-root@ip-10-20-24-62:~# sudo ufw allow 2222/tcp
-Skipping adding existing rule
-Skipping adding existing rule (v6)
-root@ip-10-20-24-62:~# sudo ufw allow 2200/tcp
-Skipping adding existing rule
-Skipping adding existing rule (v6)
-root@ip-10-20-24-62:~# sudo ufw allow www
-Skipping adding existing rule
-Skipping adding existing rule (v6)
-root@ip-10-20-24-62:~# sudo ufw allow 80/tcp
-Skipping adding existing rule
-Skipping adding existing rule (v6)
-root@ip-10-20-24-62:~# sudo ufw allow 123/udp
-Rule added
-Rule added (v6)
-root@ip-10-20-24-62:~# sudo ufw enable
-Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
-Firewall is active and enabled on system startup
-root@ip-10-20-24-62:~# sudo ufw status
-Status: active
-
-To                         Action      From
---                         ------      ----
 22                         ALLOW       Anywhere
-2222/tcp                   ALLOW       Anywhere
-2200/tcp                   ALLOW       Anywhere
-80/tcp                     ALLOW       Anywhere
-123                        ALLOW       Anywhere
 123/udp                    ALLOW       Anywhere
-22 (v6)                    ALLOW       Anywhere (v6)
-2222/tcp (v6)              ALLOW       Anywhere (v6)
 2200/tcp (v6)              ALLOW       Anywhere (v6)
 80/tcp (v6)                ALLOW       Anywhere (v6)
-123 (v6)                   ALLOW       Anywhere (v6)
+22 (v6)                    ALLOW       Anywhere (v6)
 123/udp (v6)               ALLOW       Anywhere (v6)
 
-root@ip-10-20-24-62:~# exit
+root@ip-10-20-41-235:~# 
+
 
 ```
 
