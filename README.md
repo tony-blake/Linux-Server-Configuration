@@ -61,17 +61,17 @@ The file opnes in nano and you can insert the line ```grader ALL=(ALL:ALL) ALL `
 
 ## unable to resolve host warning
 
-When Running the sudo command initially a warning appears.  This is because the host ip address is not listed in the ```bash /etc/hosts ``` file
+When Running the sudo command initially a warning appears.  This is because the host ip address is not listed in the ``` /etc/hosts ``` file
 
 ```bash
-root@ip-10-20-24-62:~# sudo visudo
-sudo: unable to resolve host ip-10-20-24-62
+root@ip-10-20-41-235:~# sudo visudo
+sudo: unable to resolve host ip-10-20-41-235
 
 ```
-To address the complaint the host ip address (in this case ```bash ip-10-20-24-62 ```) needs to be added to top of the ```bash /etc/hosts ``` file in the following way
+To address the complaint the host ip address (in this case ``` ip-10-20-41-235 ```) needs to be added to top of the ``` /etc/hosts ``` file in the following way
 
 ```bash
-127.0.0.1 localhost ip-10-20-24-62 
+127.0.0.1 localhost ip-10-20-41-235 
 ```
 
 ## Secure the server
