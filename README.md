@@ -150,8 +150,98 @@ grader@ip-10-20-36-35:~$ exit
 logout
 ```
 
+## Configure Firewalls
 
+Check UFW status to make sure its inactive ```sudo ufw status```
+Deny all incoming by default ```sudo ufw default deny incoming```
+Allow outgoing by default ```sudo ufw default allow outgoing```
+Allow SSH on port 2200 ```sudo ufw allow 2200/tcp```
+Allow HTTP on port 80 ``` sudo ufw allow 80/tcp```
+Allow NTP on port 123 ```sudo ufw allow 123/udp ```
+Turn on firewall ```sudo ufw enable```
+
+The terminal output should look like this
+
+```bash
+grader@ip-10-20-36-35:~$ sudo ufw status
+[sudo] password for grader: 
+Status: inactive
+grader@ip-10-20-36-35:~$ sudo ufw default deny incoming
+Default incoming policy changed to 'deny'
+(be sure to update your rules accordingly)
+grader@ip-10-20-36-35:~$ sudo ufw default allow outgoing
+Default outgoing policy changed to 'allow'
+(be sure to update your rules accordingly)
+grader@ip-10-20-36-35:~$ sudo ufw allow 2200/tcp
+Rules updated
+Rules updated (v6)
+grader@ip-10-20-36-35:~$ sudo ufw allow 80/tcp
+Rules updated
+Rules updated (v6)
+grader@ip-10-20-36-35:~$ sudo ufw allow 123/udp
+Rules updated
+Rules updated (v6)
+grader@ip-10-20-36-35:~$ sudo ufw enable
+Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
+Firewall is active and enabled on system startup
+grader@ip-10-20-36-35:~$ sudo ufw status
+Status: active
+
+To                         Action      From
+--                         ------      ----
+2200/tcp                   ALLOW       Anywhere
+80/tcp                     ALLOW       Anywhere
+123/udp                    ALLOW       Anywhere
+2200/tcp (v6)              ALLOW       Anywhere (v6)
+80/tcp (v6)                ALLOW       Anywhere (v6)
+123/udp (v6)               ALLOW       Anywhere (v6)
+
+grader@ip-10-20-36-35:~$ 
+
+
+
+
+
+```
+
+## Configure the local timezone to UTC
  
+run ```sudo dpkg-reconfigure tzdata```
+Then when prompted select "none of the above". 
+Then select "UTC".
+
+## Install and configure Apache to serve a Python mod_wsgi application
+
+run ``` sudo apt-get install apache2``` 
+Type public ip address (54.68.3.20) into URL and check if apache webpage is there (sceenshot)
+install mod_wsgi: ```sudo apt-get install libapache2-mod-wsgi```
+Next use the WSGI module to configure the apche server to handle requests ```sudo vim /etc/apache2/sites-enabled/000-default.conf```
+Add ```WSGIScriptAlias / /var/www/html/myapp.wsgi``` before ```</ VirtualHost>```
+Restart Apache ```sudo apache2ctl restart```
+
+## Restart Error
+
+The following error message appears on attempting to restart
+```bash
+AH00558: apache2: Could not reliably determine the servers fully qualified domain name, using 127.0.0.1. 
+Set the ServerName directive globally to suppress this message.
+```
+
+To resolve this ``` sudo vim  /etc/apache2/apache2.conf```
+And append the following line ```ServerName localhost```
+
+## Application Installation
+
+Install Git
+```bash
+sudo apt-get install git
+git config --global user.name "GRADEY"
+```
+Install python dev and verify WSGI is enabled
+
+```sudo apt-get install python-dev
+   sudo a2enmod wsgi```
+   
 
 
 
