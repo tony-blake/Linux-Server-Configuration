@@ -236,16 +236,18 @@ Install Git
 ```bash
 sudo apt-get install git
 git config --global user.name "GRADEY"
+git config --global user.email "GRADEY@54.68.3.20.com"
+
 ```
 Install python dev and verify WSGI is enabled
 
-```sudo apt-get install python-dev
-   sudo a2enmod wsgi```
+```sudo apt-get install python-dev```
+   sudo a2enmod wsgi
    
 
 
 
-
+```
 ## Required Libraries and Dependencies
 The project code requires the following software:
 
