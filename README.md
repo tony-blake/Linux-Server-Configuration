@@ -8,23 +8,24 @@ Description
 
 ## Information for Grader
 
-* IP address - 54.68.3.20
+* IP address - 52.201.233.146
 * Port - 2200
 * URL -
 
 
 ## Obtain access to virtual server
 
-Sign into your udacity account and go to this part of the website https://www.udacity.com/account#!/development_environment.
-Click on create development environment.
-Click on the download link to obtain private key.
+Set up amazon lightsail account using steps from "Get started on Lightsail" in project prep.
+https://classroom.udacity.com/nanodegrees/nd004/parts/00413454014/modules/357367901175462/lessons/3573679011239847/concepts/c4cbd3f2-9adb-45d4-8eaf-b5fc89cc606e. 
+
+Download the default private key from the Account page.
 Then move private key to .ssh folder.
 Log into server.
 
 ```bash
-mv ~/Downloads/udacity_key.rsa ~/.ssh/
-chmod 600 ~/.ssh/udacity_key.rsa
-ssh -i ~/.ssh/udacity_key.rsa root@54.68.3.20
+mv ~/Downloads/LightsailDefaultPrivateKey.pem ~/.ssh/
+chmod 600 ~/.ssh/LightsailDefaultPrivateKey.pem 
+ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@52.201.233.146
 
 ```
 
