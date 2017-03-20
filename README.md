@@ -64,6 +64,7 @@ The file opnes in nano and you can insert the line ```grader ALL=(ALL:ALL) ALL `
 
 On local machine generate SSH key pair by running command ``` ssh-keygen ```
 
+```bash
 Macintosh-109add6f31eb:~ tonyblake$ ssh-keygen
 Generating public/private rsa key pair.
 Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa
@@ -87,7 +88,7 @@ The key's randomart image is:
 |     . ...B.E    |
 |      oo.*==     |
 +-----------------+
-
+```
 
 Then in the virtual machine swich superuser to grader ``` su - grader```
 
