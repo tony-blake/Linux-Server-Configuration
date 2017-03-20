@@ -8,7 +8,7 @@ Description
 
 ## Information for Grader
 
-* IP address - 52.201.233.146
+* IP address - 54.208.109.31
 * Port - 2200
 * URL -
 
@@ -25,7 +25,7 @@ Log into server.
 ```bash
 mv ~/Downloads/LightsailDefaultPrivateKey.pem ~/.ssh/
 chmod 600 ~/.ssh/LightsailDefaultPrivateKey.pem 
-ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@52.201.233.146
+ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@54.89.71.232
 
 ```
 
@@ -52,13 +52,129 @@ Is the information correct? [Y/n] Y
 
 ```
 
-
 Change the ssh-config file so that grader has the permission to use sudo.
 
 ```bash
 sudo visudo
 ```
 The file opnes in nano and you can insert the line ```grader ALL=(ALL:ALL) ALL ``` under  ``` "#User privilege specification" ``` underneath ```root ALL=(ALL:ALL) ALL ``` . Then save file by hitting ``` ctrl + x ``` and selecting Yes.
+
+
+## Create ssh login keys for grader
+
+On local machine generate SSH key pair by running command ``` ssh-keygen ```
+
+Macintosh-109add6f31eb:~ tonyblake$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa
+/Users/tonyblake/.ssh/id_rsa already exists.
+Overwrite (y/n)? y
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /Users/tonyblake/.ssh/id_rsa.
+Your public key has been saved in /Users/tonyblake/.ssh/id_rsa.pub.
+The key fingerprint is:
+5b:a2:7e:5a:6f:69:65:34:8d:8f:69:e3:62:bb:a9:77 tonyblake@Macintosh-109add6f31eb.local
+The key's randomart image is:
++--[ RSA 2048]----+
+|                 |
+|                 |
+|             o   |
+|            + .  |
+|        S .. =   |
+|       . +  B .  |
+|      . o  * .   |
+|     . ...B.E    |
+|      oo.*==     |
++-----------------+
+
+
+Then in the virtual machine swich superuser to grader ``` su - grader```
+
+Create .ssh directory ```mkdir .ssh```
+Create empty file to store key ``` bash .ssh/authorized_keys ```
+On local machine read contents of the public key ```cat .ssh/rsa_id.pub```
+Copy the key and paste into the authorized_keys file in grader ```vim .ssh/authorized_keys``` 
+Set permissions for files: ```chmod 700 .ssh```  and ```chmod 644 .ssh/authorized_keys```
+ run ```sudo service ssh restart``` for changes to take effect
+ logout of grader
+ logout of ubuntu
+ 
+ ```bash
+
+Macintosh-109add6f31eb:~ tonyblake$ ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@54.208.109.31
+Welcome to Ubuntu 16.04.1 LTS (GNU/Linux 4.4.0-45-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  Get cloud support with Ubuntu Advantage Cloud Guest:
+    http://www.ubuntu.com/business/services/cloud
+
+0 packages can be updated.
+0 updates are security updates.
+
+
+Last login: Mon Mar 20 19:54:09 2017 from 89.101.100.147
+ubuntu@ip-172-26-1-189:~$ su - grader
+Password: 
+grader@ip-172-26-1-189:~$ mkdir .ssh
+mkdir: cannot create directory ‘.ssh’: File exists
+grader@ip-172-26-1-189:~$ vim .ssh/authorized_keys
+grader@ip-172-26-1-189:~$ vim .ssh/authorized_keys
+grader@ip-172-26-1-189:~$ chmod 700 .ssh
+grader@ip-172-26-1-189:~$ chmod 644 .ssh/authorized_keys
+grader@ip-172-26-1-189:~$ service ssh restart
+Command 'service' is available in '/usr/sbin/service'
+The command could not be located because '/usr/sbin' is not included in the PATH environment variable.
+This is most likely caused by the lack of administrative privileges associated with your user account.
+service: command not found
+grader@ip-172-26-1-189:~$ sudo su
+[sudo] password for grader: 
+root@ip-172-26-1-189:/home/grader# service ssh restart
+root@ip-172-26-1-189:/home/grader# su - grader
+grader@ip-172-26-1-189:~$ sudo service ssh restart
+grader@ip-172-26-1-189:~$ exit
+logout
+root@ip-172-26-1-189:/home/grader# exit
+exit
+grader@ip-172-26-1-189:~$ su - ubuntu
+Password: 
+su: Authentication failure
+grader@ip-172-26-1-189:~$ exit
+logout
+ubuntu@ip-172-26-1-189:~$ exit
+logout
+Connection to 54.208.109.31 closed.
+Macintosh-109add6f31eb:~ tonyblake$ ssh -i ~/.ssh/id_rsa grader@54.208.109.31
+Saving password to keychain failed
+Identity added: /Users/tonyblake/.ssh/id_rsa (/Users/tonyblake/.ssh/id_rsa)
+Welcome to Ubuntu 16.04.1 LTS (GNU/Linux 4.4.0-45-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  Get cloud support with Ubuntu Advantage Cloud Guest:
+    http://www.ubuntu.com/business/services/cloud
+
+0 packages can be updated.
+0 updates are security updates.
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+grader@ip-172-26-1-189:~$ 
+```
+
+OVERWRITTEN
 
 ## unable to resolve host warning
 
