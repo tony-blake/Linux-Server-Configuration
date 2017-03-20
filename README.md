@@ -25,7 +25,7 @@ Log into server.
 ```bash
 mv ~/Downloads/LightsailDefaultPrivateKey.pem ~/.ssh/
 chmod 600 ~/.ssh/LightsailDefaultPrivateKey.pem 
-ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@54.89.71.232
+ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@54.208.109.3
 
 ```
 
