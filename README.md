@@ -93,9 +93,13 @@ The key's randomart image is:
 Then in the virtual machine swich superuser to grader ``` su - grader```
 
 Create .ssh directory ```mkdir .ssh```
+
 Create empty file to store key ``` bash .ssh/authorized_keys ```
+
 On local machine read contents of the public key ```cat .ssh/rsa_id.pub```
-Copy the key and paste into the authorized_keys file in grader ```vim .ssh/authorized_keys``` 
+
+Copy the key and paste into the authorized_keys file in grader ```vim .ssh/authorized_keys```
+
 Set permissions for files: ```chmod 700 .ssh```  and ```chmod 644 .ssh/authorized_keys```
  run ```sudo service ssh restart``` for changes to take effect
  logout of grader
