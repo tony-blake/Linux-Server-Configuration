@@ -224,11 +224,17 @@ Then change ```Port 22``` to ```Port 2200```
 ## Configure Firewalls
 
 Check UFW status to make sure its inactive ```sudo ufw status```
+
 Deny all incoming by default ```sudo ufw default deny incoming```
+
 Allow outgoing by default ```sudo ufw default allow outgoing```
+
 Allow SSH on port 2200 ```sudo ufw allow 2200/tcp```
+
 Allow HTTP on port 80 ``` sudo ufw allow 80/tcp```
+
 Allow NTP on port 123 ```sudo ufw allow 123/udp ```
+
 Turn on firewall ```sudo ufw enable```
 
 The terminal output should look like this
@@ -284,10 +290,15 @@ Then select "UTC".
 ## Install and configure Apache to serve a Python mod_wsgi application
 
 run ``` sudo apt-get install apache2``` 
+
 Type public ip address (54.68.3.20) into URL and check if apache webpage is there (sceenshot)
+
 install mod_wsgi: ```sudo apt-get install libapache2-mod-wsgi```
+
 Next use the WSGI module to configure the apche server to handle requests ```sudo vim /etc/apache2/sites-enabled/000-default.conf```
+
 Add ```WSGIScriptAlias / /var/www/html/myapp.wsgi``` before ```</ VirtualHost>```
+
 Restart Apache ```sudo apache2ctl restart```
 
 ## Restart Error
