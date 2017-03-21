@@ -90,7 +90,7 @@ The key's randomart image is:
 +-----------------+
 ```
 
-Then in the virtual machine swich superuser to grader ``` su - grader```
+Then in the virtual machine swich superuser to grader ``` su - grader ```
 
 Create .ssh directory ```mkdir .ssh```
 
@@ -101,9 +101,14 @@ On local machine read contents of the public key ```cat .ssh/rsa_id.pub```
 Copy the key and paste into the authorized_keys file in grader ```vim .ssh/authorized_keys```
 
 Set permissions for files: ```chmod 700 .ssh```  and ```chmod 644 .ssh/authorized_keys```
- run ```sudo service ssh restart``` for changes to take effect
- logout of grader
- logout of ubuntu
+ 
+run ```sudo service ssh restart``` for changes to take effect
+
+logout of grader
+
+logout of ubuntu
+
+The terminal output should look like so
  
  ```bash
 
@@ -179,6 +184,9 @@ applicable law.
 grader@ip-172-26-1-189:~$ 
 ```
 
+
+
+
 OVERWRITTEN
 
 ## unable to resolve host warning
@@ -194,9 +202,12 @@ To address the complaint the host ip address (in this case ``` ip-10-20-41-235 `
 
 ```bash
 127.0.0.1 localhost ip-10-20-41-235 
-```
 
-## Secure the server
+
+```
+## END OF OVERWRITTEN
+
+## Update Packages
 
 To update all packages use
 
@@ -209,96 +220,6 @@ sudo apt-get upgrade
 sudo vim /etc/ssh/sshd_config
 ```
 Then change ```Port 22``` to ```Port 2200```
-Change ```PasswordAuthetication yes``` to ```PasswordAuthetication no```
-And change ```PermitRootLogin prohibit-password``` to ```PermitRootLogin no```
-Then append ```AllowUsers grader``` to end of file
-Lastly run ```sudo service ssh restart``` for changes to take effect
-Then logout
-
-## Create SSH keys and copy to server.
-
-On local machine generate SSH key pair by running command ``` ssh-keygen ```
-
-```bash
-Macintosh-109add6f31eb:~ tonyblake$ ssh-keygen
-Generating public/private rsa key pair.
-Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa
-/Users/tonyblake/.ssh/id_rsa already exists.
-Overwrite (y/n)? y
-Enter passphrase (empty for no passphrase): Passw0rd1
-Enter same passphrase again: Passw0rd1
-Your identification has been saved in /Users/tonyblake/.ssh/id_rsa.
-Your public key has been saved in /Users/tonyblake/.ssh/id_rsa.pub.
-The key fingerprint is:
-45:51:42:cb:6f:21:af:97:ed:39:78:b0:a4:ea:72:eb tonyblake@Macintosh-109add6f31eb.local
-The key's randomart image is:
-+--[ RSA 2048]----+
-|         .=o.    |
-|         o o     |
-|          = .    |
-|         . + .   |
-|        S   +    |
-|           ooo   |
-|          .oo+.  |
-|      . . ..o.o. |
-|       =Eo   .o. |
-+-----------------+
-(overwritten) Macintosh-109add6f31eb:~ tony
-
-
-
-Macintosh-109add6f31eb:~ tonyblake$ ssh-keygen
-Generating public/private rsa key pair.
-Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa
-Enter passphrase (empty for no passphrase): 
-Enter same passphrase again: 
-Your identification has been saved in /Users/tonyblake/.ssh/id_rsa.
-Your public key has been saved in /Users/tonyblake/.ssh/id_rsa.pub.
-The key fingerprint is:
-f4:61:fa:47:91:7a:86:e8:72:29:0a:85:86:ee:e9:da tonyblake@Macintosh-109add6f31eb.local
-The key's randomart image is:
-+--[ RSA 2048]----+
-|                 |
-|             .   |
-|        . o o    |
-| . .   . = + .   |
-|. o .   S + +    |
-|.. .   . o +     |
-| ..   o + . .    |
-|.... . +   .     |
-|++E .            |
-+-----------------+
-Macintosh-109add6f31eb:~ tonyblake$ 
-```
-
-Then log into grader account ```ssh -v grader@54.68.3.20 -p 2200 ```
-where password is "Passw0rd" 
-
-## Authorize and set permssions
-
-Create .ssh directory ```mkdir .ssh```
-Create empty file to store key ``` bash .ssh/authorized_keys ```
-On local machine read contents of the public key ```cat .ssh/rsa_id.pub```
-Copy the key and paste into the authorized_keys file in grader ```vim .ssh/authorized_keys``` 
-Set permissions for files: ```chmod 700 .ssh```  and ```chmod 644 .ssh/authorized_keys```
-Change ```PasswordAuthentication``` from ```yes``` back to ```no```. vim /etc/ssh/sshd_config
-save file(nano: ctrl+x, Y, Enter)
-login with key pair: ```ssh -v grader@54.68.3.20 -p 2200 -i ~/.ssh/id_rsa```
-
-
-
-```bash
-grader@ip-10-20-36-35:~$ mkdir .ssh
-grader@ip-10-20-36-35:~$ vim .ssh/authorized_keys
-grader@ip-10-20-36-35:~$ vim .ssh/authorized_keys
-grader@ip-10-20-36-35:~$ chmod 700 .ssh
-grader@ip-10-20-36-35:~$ chmod 644 .ssh/authorized_keys
-grader@ip-10-20-36-35:~$ vim /etc/ssh/sshd_config
-grader@ip-10-20-36-35:~$ sudo vim /etc/ssh/sshd_config
-[sudo] password for grader: 
-grader@ip-10-20-36-35:~$ exit
-logout
-```
 
 ## Configure Firewalls
 
@@ -313,51 +234,51 @@ Turn on firewall ```sudo ufw enable```
 The terminal output should look like this
 
 ```bash
-grader@ip-10-20-36-35:~$ sudo ufw status
+Last login: Tue Mar 21 18:50:02 2017 from 89.101.100.147
+grader@ip-172-26-1-189:~$ sudo vim /etc/ssh/sshd_config
 [sudo] password for grader: 
+grader@ip-172-26-1-189:~$ sudo ufw status
 Status: inactive
-grader@ip-10-20-36-35:~$ sudo ufw default deny incoming
+grader@ip-172-26-1-189:~$ sudo ufw default deny incoming
 Default incoming policy changed to 'deny'
 (be sure to update your rules accordingly)
-grader@ip-10-20-36-35:~$ sudo ufw default allow outgoing
+grader@ip-172-26-1-189:~$ sudo ufw default allow outgoing
 Default outgoing policy changed to 'allow'
 (be sure to update your rules accordingly)
-grader@ip-10-20-36-35:~$ sudo ufw allow 2200/tcp
+grader@ip-172-26-1-189:~$ sudo ufw allow 2200/tcp
 Rules updated
 Rules updated (v6)
-grader@ip-10-20-36-35:~$ sudo ufw allow 80/tcp
+grader@ip-172-26-1-189:~$ sudo ufw allow 80/tcp
 Rules updated
 Rules updated (v6)
-grader@ip-10-20-36-35:~$ sudo ufw allow 123/udp
+grader@ip-172-26-1-189:~$ sudo ufw allow 123/udp
 Rules updated
 Rules updated (v6)
-grader@ip-10-20-36-35:~$ sudo ufw enable
+grader@ip-172-26-1-189:~$ sudo ufw enable
 Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
 Firewall is active and enabled on system startup
-grader@ip-10-20-36-35:~$ sudo ufw status
+grader@ip-172-26-1-189:~$ sudo ufw status
 Status: active
 
 To                         Action      From
 --                         ------      ----
-2200/tcp                   ALLOW       Anywhere
-80/tcp                     ALLOW       Anywhere
-123/udp                    ALLOW       Anywhere
-2200/tcp (v6)              ALLOW       Anywhere (v6)
-80/tcp (v6)                ALLOW       Anywhere (v6)
-123/udp (v6)               ALLOW       Anywhere (v6)
+2200/tcp                   ALLOW       Anywhere                  
+80/tcp                     ALLOW       Anywhere                  
+123/udp                    ALLOW       Anywhere                  
+2200/tcp (v6)              ALLOW       Anywhere (v6)             
+80/tcp (v6)                ALLOW       Anywhere (v6)             
+123/udp (v6)               ALLOW       Anywhere (v6)             
 
-grader@ip-10-20-36-35:~$ 
-
-
-
-
+grader@ip-172-26-1-189:~$ 
 
 ```
 
 ## Configure the local timezone to UTC
  
 run ```sudo dpkg-reconfigure tzdata```
+
 Then when prompted select "none of the above". 
+
 Then select "UTC".
 
 ## Install and configure Apache to serve a Python mod_wsgi application
