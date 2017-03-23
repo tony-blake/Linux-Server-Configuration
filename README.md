@@ -8,7 +8,7 @@ Description
 
 ## Information for Grader
 
-* IP address - 54.208.109.31
+* IP address - 54.165.131.195
 * Port - 2200
 * URL -
 
@@ -25,9 +25,23 @@ Log into server.
 ```bash
 mv ~/Downloads/LightsailDefaultPrivateKey.pem ~/.ssh/
 chmod 600 ~/.ssh/LightsailDefaultPrivateKey.pem 
-ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@54.208.109.3
+ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@54.165.131.195
 
 ```
+
+## Change the SSH port from 22 to 2200 and reconfigure authetications
+```bash
+sudo vim /etc/ssh/sshd_config
+```
+Then change ```Port 22``` to ```Port 2200```
+
+## Conigure Amazon Lightsail Firewall
+
+Click on "Networking" tab. 
+
+Under Firewall section click "add another" .
+
+Choose "Custom" as application, "TCP" as protocol and "2200" as range
 
 ## Create a new user called grader
 
