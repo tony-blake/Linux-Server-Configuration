@@ -29,6 +29,16 @@ ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@54.165.131.195
 
 ```
 
+
+## Update and upgrade all packages
+
+To update all packages use
+
+```bash
+sudo apt-get update
+sudo apt-get upgrade
+```
+
 ## Change the SSH port from 22 to 2200 and reconfigure authetications
 ```bash
 sudo vim /etc/ssh/sshd_config
@@ -42,6 +52,25 @@ Click on "Networking" tab.
 Under Firewall section click "add another" .
 
 Choose "Custom" as application, "TCP" as protocol and "2200" as range
+
+## Configure Uncomplicated Firewall (UFW)
+
+Check UFW status to make sure its inactive ```sudo ufw status```
+
+Deny all incoming by default ```sudo ufw default deny incoming```
+
+Allow outgoing by default ```sudo ufw default allow outgoing```
+
+Allow SSH on port 2200 ```sudo ufw allow 2200/tcp```
+
+Allow HTTP on port 80 ``` sudo ufw allow 80/tcp```
+
+Allow NTP on port 123 ```sudo ufw allow 123/udp ```
+
+Turn on firewall ```sudo ufw enable```
+
+
+
 
 ## Create a new user called grader
 
@@ -71,7 +100,11 @@ Change the ssh-config file so that grader has the permission to use sudo.
 ```bash
 sudo visudo
 ```
-The file opnes in nano and you can insert the line ```grader ALL=(ALL:ALL) ALL ``` under  ``` "#User privilege specification" ``` underneath ```root ALL=(ALL:ALL) ALL ``` . Then save file by hitting ``` ctrl + x ``` and selecting Yes.
+The file opnes in nano and you can insert the line ```grader ALL=(ALL:ALL) ALL ``` 
+
+under  ``` "#User privilege specification" ``` underneath ```root ALL=(ALL:ALL) ALL ``` . 
+
+Then save file by hitting ``` ctrl + x ``` and selecting Yes.
 
 
 ## Create ssh login keys for grader
@@ -79,38 +112,39 @@ The file opnes in nano and you can insert the line ```grader ALL=(ALL:ALL) ALL `
 On local machine generate SSH key pair by running command ``` ssh-keygen ```
 
 ```bash
+Last login: Thu Mar 23 23:04:51 on ttys000
 Macintosh-109add6f31eb:~ tonyblake$ ssh-keygen
 Generating public/private rsa key pair.
 Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa
-/Users/tonyblake/.ssh/id_rsa already exists.
-Overwrite (y/n)? y
 Enter passphrase (empty for no passphrase): 
 Enter same passphrase again: 
 Your identification has been saved in /Users/tonyblake/.ssh/id_rsa.
 Your public key has been saved in /Users/tonyblake/.ssh/id_rsa.pub.
 The key fingerprint is:
-5b:a2:7e:5a:6f:69:65:34:8d:8f:69:e3:62:bb:a9:77 tonyblake@Macintosh-109add6f31eb.local
+6a:da:e8:78:ff:39:75:60:70:5f:4f:98:db:00:dd:f2 tonyblake@Macintosh-109add6f31eb.local
 The key's randomart image is:
 +--[ RSA 2048]----+
-|                 |
-|                 |
-|             o   |
-|            + .  |
-|        S .. =   |
-|       . +  B .  |
-|      . o  * .   |
-|     . ...B.E    |
-|      oo.*==     |
+|            .o + |
+|        . .   B o|
+|         o . . O |
+|          o . . E|
+|        S. .     |
+|       .  . .    |
+|      o  . .     |
+|   ..=  ..       |
+|  .o+.o.o.       |
 +-----------------+
+Macintosh-109add6f31eb:~ tonyblake$ 
+
 ```
 
-Then in the virtual machine swich superuser to grader ``` su - grader ```
+Then in the virtual machine swich superuser to grader ``` su - grader ``` where password is ```Passw0rd```
 
 Create .ssh directory ```mkdir .ssh```
 
-Create empty file to store key ``` bash .ssh/authorized_keys ```
+Create empty file to store key ``` vim .ssh/authorized_keys ```
 
-On local machine read contents of the public key ```cat .ssh/rsa_id.pub```
+On local machine read contents of the public key ``` cat ~/.ssh/rsa_id.pub```
 
 Copy the key and paste into the authorized_keys file in grader ```vim .ssh/authorized_keys```
 
@@ -126,172 +160,20 @@ The terminal output should look like so
  
  ```bash
 
-Macintosh-109add6f31eb:~ tonyblake$ ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@54.208.109.31
-Welcome to Ubuntu 16.04.1 LTS (GNU/Linux 4.4.0-45-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-  Get cloud support with Ubuntu Advantage Cloud Guest:
-    http://www.ubuntu.com/business/services/cloud
-
-0 packages can be updated.
-0 updates are security updates.
-
-
-Last login: Mon Mar 20 19:54:09 2017 from 89.101.100.147
-ubuntu@ip-172-26-1-189:~$ su - grader
+ubuntu@ip-172-26-14-122:~$ su - grader
 Password: 
-grader@ip-172-26-1-189:~$ mkdir .ssh
-mkdir: cannot create directory ‘.ssh’: File exists
-grader@ip-172-26-1-189:~$ vim .ssh/authorized_keys
-grader@ip-172-26-1-189:~$ vim .ssh/authorized_keys
-grader@ip-172-26-1-189:~$ chmod 700 .ssh
-grader@ip-172-26-1-189:~$ chmod 644 .ssh/authorized_keys
-grader@ip-172-26-1-189:~$ service ssh restart
-Command 'service' is available in '/usr/sbin/service'
-The command could not be located because '/usr/sbin' is not included in the PATH environment variable.
-This is most likely caused by the lack of administrative privileges associated with your user account.
-service: command not found
-grader@ip-172-26-1-189:~$ sudo su
+grader@ip-172-26-14-122:~$ vim .ssh/authorized_keys
+grader@ip-172-26-14-122:~$ chmod 700 .ssh
+grader@ip-172-26-14-122:~$ chmod 644 .ssh/authorized_keys
+grader@ip-172-26-14-122:~$ sudo service ssh restart
 [sudo] password for grader: 
-root@ip-172-26-1-189:/home/grader# service ssh restart
-root@ip-172-26-1-189:/home/grader# su - grader
-grader@ip-172-26-1-189:~$ sudo service ssh restart
-grader@ip-172-26-1-189:~$ exit
-logout
-root@ip-172-26-1-189:/home/grader# exit
-exit
-grader@ip-172-26-1-189:~$ su - ubuntu
-Password: 
-su: Authentication failure
-grader@ip-172-26-1-189:~$ exit
-logout
-ubuntu@ip-172-26-1-189:~$ exit
-logout
-Connection to 54.208.109.31 closed.
-Macintosh-109add6f31eb:~ tonyblake$ ssh -i ~/.ssh/id_rsa grader@54.208.109.31
-Saving password to keychain failed
-Identity added: /Users/tonyblake/.ssh/id_rsa (/Users/tonyblake/.ssh/id_rsa)
-Welcome to Ubuntu 16.04.1 LTS (GNU/Linux 4.4.0-45-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-  Get cloud support with Ubuntu Advantage Cloud Guest:
-    http://www.ubuntu.com/business/services/cloud
-
-0 packages can be updated.
-0 updates are security updates.
-
-
-
-The programs included with the Ubuntu system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
-applicable law.
-
-grader@ip-172-26-1-189:~$ 
+grader@ip-172-26-14-122:~$ 
 ```
 
 
 
 
-OVERWRITTEN
 
-## unable to resolve host warning
-
-When Running the sudo command initially a warning appears.  This is because the host ip address is not listed in the ``` /etc/hosts ``` file
-
-```bash
-root@ip-10-20-41-235:~# sudo visudo
-sudo: unable to resolve host ip-10-20-41-235
-
-```
-To address the complaint the host ip address (in this case ``` ip-10-20-41-235 ```) needs to be added to top of the ``` /etc/hosts ``` file in the following way
-
-```bash
-127.0.0.1 localhost ip-10-20-41-235 
-
-
-```
-## END OF OVERWRITTEN
-
-## Update Packages
-
-To update all packages use
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-## Change the SSH port from 22 to 2200 and reconfigure authetications
-```bash
-sudo vim /etc/ssh/sshd_config
-```
-Then change ```Port 22``` to ```Port 2200```
-
-## Configure Firewalls
-
-Check UFW status to make sure its inactive ```sudo ufw status```
-
-Deny all incoming by default ```sudo ufw default deny incoming```
-
-Allow outgoing by default ```sudo ufw default allow outgoing```
-
-Allow SSH on port 2200 ```sudo ufw allow 2200/tcp```
-
-Allow HTTP on port 80 ``` sudo ufw allow 80/tcp```
-
-Allow NTP on port 123 ```sudo ufw allow 123/udp ```
-
-Turn on firewall ```sudo ufw enable```
-
-The terminal output should look like this
-
-```bash
-Last login: Tue Mar 21 18:50:02 2017 from 89.101.100.147
-grader@ip-172-26-1-189:~$ sudo vim /etc/ssh/sshd_config
-[sudo] password for grader: 
-grader@ip-172-26-1-189:~$ sudo ufw status
-Status: inactive
-grader@ip-172-26-1-189:~$ sudo ufw default deny incoming
-Default incoming policy changed to 'deny'
-(be sure to update your rules accordingly)
-grader@ip-172-26-1-189:~$ sudo ufw default allow outgoing
-Default outgoing policy changed to 'allow'
-(be sure to update your rules accordingly)
-grader@ip-172-26-1-189:~$ sudo ufw allow 2200/tcp
-Rules updated
-Rules updated (v6)
-grader@ip-172-26-1-189:~$ sudo ufw allow 80/tcp
-Rules updated
-Rules updated (v6)
-grader@ip-172-26-1-189:~$ sudo ufw allow 123/udp
-Rules updated
-Rules updated (v6)
-grader@ip-172-26-1-189:~$ sudo ufw enable
-Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
-Firewall is active and enabled on system startup
-grader@ip-172-26-1-189:~$ sudo ufw status
-Status: active
-
-To                         Action      From
---                         ------      ----
-2200/tcp                   ALLOW       Anywhere                  
-80/tcp                     ALLOW       Anywhere                  
-123/udp                    ALLOW       Anywhere                  
-2200/tcp (v6)              ALLOW       Anywhere (v6)             
-80/tcp (v6)                ALLOW       Anywhere (v6)             
-123/udp (v6)               ALLOW       Anywhere (v6)             
-
-grader@ip-172-26-1-189:~$ 
-
-```
 
 ## Configure the local timezone to UTC
  
@@ -305,7 +187,7 @@ Then select "UTC".
 
 run ``` sudo apt-get install apache2``` 
 
-Type public ip address (54.68.3.20) into URL and check if apache webpage is there (sceenshot)
+Type public ip address (54.165.131.195) into URL and check if apache webpage is there (sceenshot)
 
 install mod_wsgi: ```sudo apt-get install libapache2-mod-wsgi```
 
@@ -315,7 +197,7 @@ Add ```WSGIScriptAlias / /var/www/html/myapp.wsgi``` before ```</ VirtualHost>``
 
 Restart Apache ```sudo apache2ctl restart```
 
-## Restart Error
+## Restart Error (If it happens)
 
 The following error message appears on attempting to restart
 ```bash
@@ -332,9 +214,88 @@ Install Git
 ```bash
 sudo apt-get install git
 git config --global user.name "GRADEY"
-git config --global user.email "GRADEY@54.68.3.20.com"
+git config --global user.email "GRADEY@54.165.131.195.com"
 
 ```
+
+
+## Install and configure PostgreSQL
+
+run ```sudo apt-get install postgresql postgresql-contrib```
+
+Check if no remote connections are allowed ```sudo vim /etc/postgresql/9.5/main/pg_hba.conf```
+```bash
+# "local" is for Unix domain socket connections only
+local   all             all                                     peer
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+host    all             all             ::1/128                 md5
+```
+
+Create a PostgreSQL user called catalog ```sudo -u postgres createuser -P catalog```
+
+When prompted to create password type ```Passw0rd2```
+
+Create an empty database called catalog ```sudo -u postgres createdb -O catalog catalog```
+
+## Install Applications
+
+run the following commands
+
+```bash
+sudo apt-get install python-psycopg2 python-flask
+sudo apt-get install python-sqlalchemy python-pip
+sudo pip install oauth2client
+sudo pip install requests
+sudo pip install httplib2
+sudo pip install flask-seasurf
+```
+
+## Clone the repository that contains Catalog app
+
+run the following commands
+
+```bash
+cd /srv/
+sudo mkdir fullstack-nanodegree-vm
+sudo chown www-data:www-data fullstack-nanodegree-vm/
+sudo -u www-data git clone https://github.com/tony-blake/TrueSophia.git fullstack-nanodegree-vm
+```
+
+
+## Update catalog.wsgi file
+
+The following changes have been made. 
+* Paths changed to where catalog is located.
+* Secret key application set to a random value
+* PostgreSQL for ```catalog``` user is set
+
+```bash
+#!/usr/bin/python
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0, '/srv/fullstack-nanodegree-vm/Desktop/Sophia/vagrant/catalog')
+
+from catalog import app as application
+from catalog.database_setup import create_db
+from catalog.populate_database import populate_database
+
+application.secret_key = 'SECRET'  # This needs changing in production env
+
+application.config['DATABASE_URL'] = 'postgresql://catalog:PASSWORD@localhost/catalog'
+application.config['UPLOAD_FOLDER'] = '/srv/fullstack-nanodegree-vm/Desktop/Sophia/vagrant/catalog/item_images'
+application.config['OAUTH_SECRETS_LOCATION'] = '/srv/fullstack-nanodegree-vm/Desktop/Sophia/vagrant/catalog'
+application.config['ALLOWED_EXTENSIONS'] = set(['jpg', 'jpeg', 'png', 'gif'])
+application.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024  # 200 MB
+
+# Create database and populate it, if not already done so.
+create_db(application.config['DATABASE_URL'])
+populate_database()
+```
+
+
 Install python dev and verify WSGI is enabled
 
 ```sudo apt-get install python-dev```
