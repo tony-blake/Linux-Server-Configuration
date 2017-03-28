@@ -296,6 +296,10 @@ populate_database()
 ```
 
 
+## Configure Virtual Apache 2 Server to host  Catalog App
+
+
+
 Install python dev and verify WSGI is enabled
 
 ```sudo apt-get install python-dev```
