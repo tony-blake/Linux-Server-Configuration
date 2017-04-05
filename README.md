@@ -271,6 +271,9 @@ The following changes have been made.
 * Secret key application set to a random value
 * PostgreSQL for ```catalog``` user is set
 
+
+## CHANGE PATHS BACK TO WHATS IN TRUESOPHIA
+
 ```bash
 #!/usr/bin/python
 import sys
