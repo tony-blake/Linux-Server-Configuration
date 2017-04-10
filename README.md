@@ -229,10 +229,16 @@ Verify wsgi is enabled ```sudo a2enmod wsgi```
 ## Create Flask App
 
 ``` cd /var/www ```
-    sudo mkdir catalog
-    cd catalog
-sudo mkdir static templates
-sudo nano __init__.py
+
+```sudo mkdir catalog```
+
+```cd catalog```
+
+```sudo mkdir static templates```
+
+```sudo vim __init__.py```
+```bash
+
  from flask import Flask
 app = Flask(__name__)
 @app.route("/")
@@ -240,6 +246,6 @@ def hello():
     return "Hello, world (Testing!)"
 if __name__ == "__main__":
 
-
+```
 
 
