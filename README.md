@@ -249,3 +249,20 @@ if __name__ == "__main__":
 ```
 
 
+## Install Flask
+
+install flask
+
+```sudo apt-get install python-pip```
+
+```sudo pip install virtualenv```
+
+```sudo virtualenv venv```
+
+```sudo chmod -R 777 venv```
+``` source venv/bin/activate```
+
+```pip install Flask```
+```python __init__.py```
+
+```deactivate```
