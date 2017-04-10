@@ -191,7 +191,7 @@ Type public ip address (54.165.131.195) into URL and check if apache webpage is 
 
 install mod_wsgi: ```sudo apt-get install libapache2-mod-wsgi```
 
-Next use the WSGI module to configure the apche server to handle requests ```sudo vim /etc/apache2/sites-enabled/000-default.conf```
+Next use the WSGI module to configure the apche server to handle requests ```sudo vim /etc/apache2/sites-availible/000-default.conf```
 
 Add ```WSGIScriptAlias / /var/www/html/myapp.wsgi``` before ```</ VirtualHost>```
 
@@ -216,262 +216,22 @@ sudo apt-get install git
 git config --global user.name "GRADEY"
 git config --global user.email "GRADEY@54.165.131.195.com"
 
-```
-
-
-## Install and configure PostgreSQL
-
-run ```sudo apt-get install postgresql postgresql-contrib```
-
-Check if no remote connections are allowed ```sudo vim /etc/postgresql/9.5/main/pg_hba.conf```
-```bash
-# "local" is for Unix domain socket connections only
-local   all             all                                     peer
-# IPv4 local connections:
-host    all             all             127.0.0.1/32            md5
-# IPv6 local connections:
-host    all             all             ::1/128                 md5
-```
-
-Create a PostgreSQL user called catalog ```sudo -u postgres createuser -P catalog```
-
-When prompted to create password type ```Passw0rd2```
-
-Create an empty database called catalog ```sudo -u postgres createdb -O catalog catalog```
-
-## Install Applications
-
-run the following commands
-
-```bash
-sudo apt-get install python-psycopg2 python-flask
-sudo apt-get install python-sqlalchemy python-pip
-sudo pip install oauth2client
-sudo pip install requests
-sudo pip install httplib2
-sudo pip install flask-seasurf
-```
-
-## Clone the repository that contains Catalog app
-
-run the following commands
-
-```bash
-cd /srv/
-sudo mkdir fullstack-nanodegree-vm
-sudo chown www-data:www-data fullstack-nanodegree-vm/
-sudo -u www-data git clone https://github.com/tony-blake/TrueSophia.git fullstack-nanodegree-vm
-```
-
-
-## Update catalog.wsgi file
-
-The following changes have been made. 
-* Paths changed to where catalog is located.
-* Secret key application set to a random value
-* PostgreSQL for ```catalog``` user is set
-
-
-## CHANGE PATHS BACK TO WHATS IN TRUESOPHIA
-
-```bash
-#!/usr/bin/python
-import sys
-import logging
-logging.basicConfig(stream=sys.stderr)
-sys.path.insert(0, '/srv/fullstack-nanodegree-vm/Desktop/Sophia/vagrant/catalog')
-
-from catalog import app as application
-from catalog.database_setup import create_db
-from catalog.populate_database import populate_database
-
-application.secret_key = 'SECRET'  # This needs changing in production env
-
-application.config['DATABASE_URL'] = 'postgresql://catalog:PASSWORD@localhost/catalog'
-application.config['UPLOAD_FOLDER'] = '/srv/fullstack-nanodegree-vm/Desktop/Sophia/vagrant/catalog/item_images'
-application.config['OAUTH_SECRETS_LOCATION'] = '/srv/fullstack-nanodegree-vm/Desktop/Sophia/vagrant/catalog'
-application.config['ALLOWED_EXTENSIONS'] = set(['jpg', 'jpeg', 'png', 'gif'])
-application.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024  # 200 MB
-
-# Create database and populate it, if not already done so.
-create_db(application.config['DATABASE_URL'])
-populate_database()
-```
-
-
-## Configure Virtual Apache 2 Server to host  Catalog App
-
-
-
-Install python dev and verify WSGI is enabled
-
-```sudo apt-get install python-dev```
-   sudo a2enmod wsgi
-   
-
 
 
 ```
-## Required Libraries and Dependencies
-The project code requires the following software:
+## Install python dev and verify WSGI is enabled
 
-* Python 2.7.x
-* [SQLAlchemy](http://www.sqlalchemy.org/) 0.8.4 or higher (a Python SQL toolkit)
-* [Flask](http://flask.pocoo.org/) 0.10.1 or higher (a web development microframework)
-* The following Python packages:
-    * oauth2client
-    * requests
-    * httplib2
-    * flask-seasurf (a CSRF defence)
+Install python-dev package ```sudo apt-get install python-dev```
+
+Verify wsgi is enabled ```sudo a2enmod wsgi```
 
 
-You can run the project in a Vagrant managed virtual machine (VM) which includes all the
-required dependencies (see below for how to run the VM). For this you will need
-[Vagrant](https://www.vagrantup.com/downloads) and
-[VirtualBox](https://www.virtualbox.org/wiki/Downloads) software installed on your
-system.
+## Create Flask App
 
-## Project contents
-This project consists for the following files in the `catalog` directory:
-
-* `application.py` - The main Python script that serves the website. If no database
-    is found, one is created and populated by `populate_database.py`.
-* `fb_client_secrets.json` - Client secrets for Facebook OAuth login.
-* `g_client_secrets.json` - Client secrets for Google OAuth login.
-* `README.md` - This read me file.
-* `/catalog` - Directory containing the `catalog` package.
-    * `/static` - Directory containing CSS and Javascript for the website.
-        Includes a copy of the [Material Design Lite](http://www.getmdl.io/)
-        web framework by Google and
-        [JavaScript Cookie](https://github.com/js-cookie/js-cookie/), a JavaScript
-        API for handling cookies.
-    * `/templates` - Directory containing the HTML templates for the website, using
-        the [Jinja 2](http://jinja.pocoo.org/docs/dev/) templating language for Python.
-        See next section for more details on contents.
-    * `__init__.py` - Initialises the Flask app and imports the URL routes.
-    * `auth.py` - Handles the login and logout of users using OAuth.
-    * `connect_to_database.py` - Function for connecting to the database.
-    * `database_setup.py` - Defines the database classes and creates an empty database.
-    * `file_management.py` - Functions for handling user uploaded image files.
-    * `json_endpoint.py` - Returns the data in JSON format.
-    * `populate_database.py` - Inserts a selection of animals into the database.
-    * `views.py` - Provides backend code to produce web page views of the data and forms
-        for creating, editing and deleting animals. It also ensures that only the user
-        that added an animal can edit or delete it.
-    * `xml_generator.py` - Returns the data in XML format.
-
-### Templates
-The `/templates` directory contains the following files, written in HTML and the Jinja2
-templating language:
-
-* `add_item_button.html` - Renders a MDL button on a page to add a new item (paper).
-* `delete_item.html` - Delete paper confirmation page.
-* `edit_item.html` - Form to edit the details of a paper.
-* `homepage.html` - The default page, which lists the 10 latest papers that were added.
-* `item.html` - A page that displays a single paper and its details.
-* `items.html` - A page that lists the papers belonging to a single category.
-* `layout.html` - This defines the common layout of the website and is the parent
-    for all the other template pages.
-* `login.html` - A login page featuring OAuth Goolge+ and Facebook login buttons.
-* `my_items.html` - A page for displaying the pages you have added to the website.
-* `new_item.html` - A form for adding a new paper.
-
-## How to Run the Project
-Download the project zip file to you computer and unzip the file. Or clone this
-repository to your desktop.
-
-Open the text-based interface for your operating system (e.g. the terminal
-window in Linux, the command prompt in Windows).
-
-Navigate to the project directory and then enter the `vagrant` directory.
-
-### Bringing the VM up
-Bring up the VM with the following command:
-
-```bash
-vagrant up
-```
-
-The first time you run this command it will take awhile, as the VM image needs to
-be downloaded.
-
-You can then log into the VM with the following command:
-
-```bash
-vagrant ssh
-```
-
-More detailed instructions for installing the Vagrant VM can be found
-[here](https://www.udacity.com/wiki/ud197/install-vagrant).
-
-### Make sure you're in the right place
-Once inside the VM, navigate to the tournament directory with this command:
-
-```bash
-cd /vagrant/catalog
-```
-
-### OAuth setup
-In order to log in to the web app, you will need to get either a Google+ or Facebook
-(or both) OAuth app ID and secret. For Google, go to the
-[Google Developers Console](https://console.developers.google.com/) and for Facebook,
-go to [Facebook Login](https://developers.facebook.com/products/login).
-
-Once you have your credentials, put the IDs and secrets in the `fb_client_secrets.json`
-file for Facebook and `g_client_secrets.json` for Google.
-
-You will now be able to log in to the app.
-
-### Run application.py
-On the first run of `application.py` there will be no database present, so it creates
-one and populates it with sample data. On the command line do:
-
-```bash
-python application.py
-```
-
-It then starts a web server that serves the application. To view the application,
-go to the following address using a browser on the host system:
-
-```
-http://localhost:8000/
-```
-
-You should see the latest papers that were added to the database. Have a read of the papers in the different categories. You can download them by right clicking on the pdf image in the item category. To upload a document from your own device , you'll need to log in first with either a Google or Facebook account.
+``` cd /var/www ```
 
 
-### Shutting the VM down
-When you are finished with the VM, press `Ctrl-D` to logout of it and shut it down
-with this command:
 
-```bash
-vagrant halt
-```
-
-## Extra Credit Description
-The following features are present to earn an extra credit from Udacity.
-
-### XML Endpoint
-Database contents can be obtained in XML form by going to
-[http://localhost:8000/catalog.xml](http://localhost:8000/catalog.xml). Depending
-on your browser, you may need to view source of the page to view the XML file. You
-can do this by right-clicking and selecting `View Page Source` from the menu.
-
-### Papers
-The Sophia app allows the user to add, edit and delete an image for each paper. An
-image may either be uploaded to the app or specified with the URL of an image. If
-a paper has an image associated with it, it is displayed to all users.
-
-### Cross-site Request Forgery Protection
-The app uses the Flask plugin [SeaSurf](https://flask-seasurf.readthedocs.org/en/latest/),
-in order to protect against cross-site request forgery. An addition cookie is stored
-in the client containing a nonce. When a user logs in, adds, edits or deletes an item,
-the contents of this cookie is checked to make sure it matches the value on the server.
-If it does not match or is missing, no change to the database will be made.
-
-### References
-I modeled the layout of my "Journal App" on the "Zoo Management App" by Steven Wooding.
-https://github.com/SteveWooding/fullstack-nanodegree-vm/tree/master/vagrant/catalog 
 
 
 
