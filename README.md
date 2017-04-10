@@ -321,3 +321,10 @@ Create the wsgi file
 save file
 
 ```sudo service apache2 restart```
+
+
+
+```mkdir catalog```
+```sudo mv TrueSophia/Desktop/Sophia/vagrant/catalog/* catalog/```
+
+Now update (appplication.py ?), fb_clients, g_clients, etc and mv to new catalog folder and check that wsgi file
