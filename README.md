@@ -261,7 +261,7 @@ install flask
 
 ```sudo chmod -R 777 venv```
 
-```venv/bin/activate```
+```source venv/bin/activate```
 
 ```pip install Flask```
 ```python __init__.py```
