@@ -268,3 +268,56 @@ install flask
 ```python __init__.py```
 
 ```deactivate```
+
+
+## Configure And Enable New Virtual Host
+
+Create host config file ``sudo vim /etc/apache2/sites-available/catalog.conf```
+
+paste the following:
+
+```bash
+<VirtualHost *:80>
+  ServerName 54.165.131.195
+  ServerAdmin admin@54.165.131.195
+  WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+  <Directory /var/www/catalog/catalog/>
+      Order allow,deny
+      Allow from all
+  </Directory>
+  Alias /static /var/www/catalog/catalog/static
+  <Directory /var/www/catalog/catalog/static/>
+      Order allow,deny
+      Allow from all
+  </Directory>
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  LogLevel warn
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+    
+save file
+
+Enable `sudo a2ensite catalog`
+
+Create the wsgi file
+
+```cd /var/www/catalog```
+
+```sudo vim catalog.wsgi```
+
+```bash
+
+  #!/usr/bin/python
+  import sys
+  import logging
+  logging.basicConfig(stream=sys.stderr)
+  sys.path.insert(0,"/var/www/catalog/")
+
+  from catalog import app as application
+  application.secret_key = 'Add your secret key'
+  
+  ```
+save file
+
+```sudo service apache2 restart```
