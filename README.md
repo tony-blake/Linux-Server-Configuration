@@ -335,3 +335,21 @@ Now update (appplication.py ?), fb_clients, g_clients, etc and mv to new catalog
 from ```cd /var/www/catalog/``` create .htaccess file ```sudo vim .htaccess```
 paste in ```RedirectMatch 404 /\.git```
 save file
+
+## Install Dependencies 
+
+by creating the requirements file ``` sudo vim requirements``` and runnning it ```bash requirements```
+
+```bash
+
+source venv/bin/activate
+sudo apt-get install python-psycopg2 python-flask
+sudo apt-get install python-sqlalchemy python-pip
+sudo pip install --uograde oauth2client
+sudo pip install requests
+sudo pip install httplib2
+pip install Flask-SQLAlchemy
+sudo pip install sqlalchemy
+sudo pip install flask-seasurf
+```
+
