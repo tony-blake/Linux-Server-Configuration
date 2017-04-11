@@ -328,3 +328,10 @@ save file
 ```sudo mv TrueSophia/Desktop/Sophia/vagrant/catalog/* catalog/```
 
 Now update (appplication.py ?), fb_clients, g_clients, etc and mv to new catalog folder and check that wsgi file
+
+
+## Make .git inaccessible
+
+from ```cd /var/www/catalog/``` create .htaccess file ```sudo vim .htaccess```
+paste in ```RedirectMatch 404 /\.git```
+save file
