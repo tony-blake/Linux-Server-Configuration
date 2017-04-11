@@ -353,3 +353,53 @@ sudo pip install sqlalchemy
 sudo pip install flask-seasurf
 ```
 
+
+## Install and configure PostgreSQL:
+
+Install postgresql ```sudo apt-get install postgresql```
+
+install additional models ```sudo apt-get install postgresql-contrib```
+
+by default ```no remote connections``` are not allowed
+
+configure database_setup.py ```sudo vim database_setup.py```
+
+```python engine = create_engine('postgresql://catalog:db-password@localhost/catalog')```
+
+repeat for application.py(main.py)
+
+copy your main app.py file into the init.py file mv app.py __init__.py
+
+Add catalog user ```sudo adduser catalog```
+
+login as postgres super user ```sudo su - postgres```
+
+enter postgresql ```psql```
+
+Create user catalog ```CREATE USER catalog WITH PASSWORD 'db-password'```
+
+Change role of user catalog to createDB ```ALTER USER catalog CREATEDB```
+
+List all users and roles to verify ```\du```
+
+Create new DB "catalog" with own of catalog ```CREATE DATABASE catalog WITH OWNER catalog```;
+
+Connect to database ``\c catalog```
+
+Revoke all rights ```REVOKE ALL ON SCHEMA public FROM public```;
+
+Give accessto only to catalog role ```GRANT ALL ON SCHEMA public TO catalog```;
+
+Quit postgressql `\q`
+
+logout from postgresql super user ```exit```
+
+Setup your database schema ```python database_setup.py```
+
+I had problems importing psycopg2 this stack overflow post helped me
+
+retstart apache ```sudo service apache2 restart```
+
+I was getting a ```No such file or directory: 'client_secrets.json'``` error. I fixed using a raw path to the file ```open(r'/var/www/catalog/catalog/client_secrets.json', 'r').read())... ```You'll also need to do this for any other instances of the file path stack overflow
+
+
