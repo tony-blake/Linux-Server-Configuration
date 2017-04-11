@@ -325,7 +325,7 @@ save file
 
 
 ```mkdir catalog```
-```sudo mv TrueSophia/Desktop/Sophia/vagrant/catalog/* catalog/```
+```sudo mv TrueSophia/Desktop/Sophia/vagrant/catalog/catalog/* catalog/```
 
 Now update (appplication.py ?), fb_clients, g_clients, etc and mv to new catalog folder and check that wsgi file
 
