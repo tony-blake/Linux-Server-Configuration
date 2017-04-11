@@ -272,7 +272,7 @@ install flask
 
 ## Configure And Enable New Virtual Host
 
-Create host config file ``sudo vim /etc/apache2/sites-available/catalog.conf```
+Create host config file ```sudo vim /etc/apache2/sites-available/catalog.conf```
 
 paste the following:
 
