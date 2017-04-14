@@ -10,7 +10,7 @@ Description
 
 * IP address - 54.165.131.195
 * Port - 2200
-* URL -
+* URL - ec2-54-165-131-95.compute-1.amazonaws.com
 
 
 ## Obtain access to virtual server
@@ -394,6 +394,9 @@ Quit postgressql `\q`
 
 logout from postgresql super user ```exit```
 
+##################################################################
+
+
 Setup your database schema ```python database_setup.py```
 
 I had problems importing psycopg2 this stack overflow post helped me
@@ -403,3 +406,97 @@ retstart apache ```sudo service apache2 restart```
 I was getting a ```No such file or directory: 'client_secrets.json'``` error. I fixed using a raw path to the file ```open(r'/var/www/catalog/catalog/client_secrets.json', 'r').read())... ```You'll also need to do this for any other instances of the file path stack overflow
 
 
+#########################################################################
+
+
+## 11.5 - Run application
+
+Restart Apache:
+```$ sudo service apache2 restart```
+
+Open a browser and put in your public ip-address as url, e.g. 54.165.131.195 - if everything works, the application should come up
+*If getting an internal server error, check the Apache error files:
+Source: A2 Hosting
+View the last 20 lines in the error log: ```$ sudo tail -20 /var/log/apache2/error.log````
+*If a file like 'g_client_secrets.json' couldn't been found:
+Source: Stackoverflow
+
+Could not parse file errpr
+
+## 11.6 - Get OAuth-Logins Working
+
+Source: Udacity and Apache
+
+Open http://www.hcidata.info/host2ip.cgi and receive the Host name for your public IP-address, e.g. for 54.165.131.195, its ec2-54-165-131-95.compute-1.amazonaws.com
+Open the Apache configuration files for the web app: ```$ sudo vim /etc/apache2/sites-available/catalog.conf```
+
+Paste in the following line below ServerAdmin:
+```ServerAlias HOSTNAME```, e.g. ```ec2-54-165-131-95.compute-1.amazonaws.com````
+
+Enable the virtual host:
+```$ sudo a2ensite catalog```
+
+
+
+To get the Google+ authorization working:
+Go to the project on the Developer Console: https://console.developers.google.com/project
+Navigate to APIs & auth > Credentials > Edit Settings
+add your host name and public IP-address to your Authorized JavaScript origins and your host name + oauth2callback to Authorized redirect URIs, e.g. http://ec2-52-25-0-41.us-west-2.compute.amazonaws.com/oauth2callback
+To get the Facebook authorization working:
+Go on the Facebook Developers Site to My Apps https://developers.facebook.com/apps/
+Click on your App, go to Settings and fill in your public IP-Address including prefixed hhtp:// in the Site URL field
+To leave the development mode, so others can login as well, also fill in a contact email address in the respective field, "Save Changes", click on 'Status & Review'11.5 - Run application
+
+Restart Apache:
+$ sudo service apache2 restart
+Open a browser and put in your public ip-address as url, e.g. 52.25.0.41 - if everything works, the application should come up
+*If getting an internal server error, check the Apache error files:
+Source: A2 Hosting
+View the last 20 lines in the error log: $ sudo tail -20 /var/log/apache2/error.log
+*If a file like 'g_client_secrets.json' couldn't been found:
+Source: Stackoverflow
+11.6 - Get OAuth-Logins Working
+
+Source: Udacity and Apache
+
+Open http://www.hcidata.info/host2ip.cgi and receive the Host name for your public IP-address, e.g. for 52.25.0.41, its ec2-52-25-0-41.us-west-2.compute.amazonaws.com
+Open the Apache configuration files for the web app: $ sudo vim /etc/apache2/sites-available/catalog.conf
+Paste in the following line below ServerAdmin:
+ServerAlias HOSTNAME, e.g. ec2-52-25-0-41.us-west-2.compute.amazonaws.com
+Enable the virtual host:
+$ sudo a2ensite catalog
+To get the Google+ authorization working:
+Go to the project on the Developer Console: https://console.developers.google.com/project
+Navigate to APIs & auth > Credentials > Edit Settings
+add your host name and public IP-address to your Authorized JavaScript origins and your host name + oauth2callback to Authorized redirect URIs, e.g. http://ec2-52-25-0-41.us-west-2.compute.amazonaws.com/oauth2callback
+To get the Facebook authorization working:
+Go on the Facebook Developers Site to My Apps https://developers.facebook.com/apps/
+Click on your App, go to Settings and fill in your public IP-Address including prefixed hhtp:// in the Site URL field
+To leave the development mode, so others can login as well, also fill in a contact email address in the respective field, "Save Changes", click on 'Status & Review'11.5 - Run application
+
+Restart Apache:
+$ sudo service apache2 restart
+Open a browser and put in your public ip-address as url, e.g. 52.25.0.41 - if everything works, the application should come up
+*If getting an internal server error, check the Apache error files:
+Source: A2 Hosting
+View the last 20 lines in the error log: $ sudo tail -20 /var/log/apache2/error.log
+*If a file like 'g_client_secrets.json' couldn't been found:
+Source: Stackoverflow
+11.6 - Get OAuth-Logins Working
+
+Source: Udacity and Apache
+
+Open http://www.hcidata.info/host2ip.cgi and receive the Host name for your public IP-address, e.g. for 52.25.0.41, its ec2-52-25-0-41.us-west-2.compute.amazonaws.com
+Open the Apache configuration files for the web app: $ sudo vim /etc/apache2/sites-available/catalog.conf
+Paste in the following line below ServerAdmin:
+ServerAlias HOSTNAME, e.g. ec2-52-25-0-41.us-west-2.compute.amazonaws.com
+Enable the virtual host:
+$ sudo a2ensite catalog
+To get the Google+ authorization working:
+Go to the project on the Developer Console: https://console.developers.google.com/project
+Navigate to APIs & auth > Credentials > Edit Settings
+add your host name and public IP-address to your Authorized JavaScript origins and your host name + oauth2callback to Authorized redirect URIs, e.g. http://ec2-52-25-0-41.us-west-2.compute.amazonaws.com/oauth2callback
+To get the Facebook authorization working:
+Go on the Facebook Developers Site to My Apps https://developers.facebook.com/apps/
+Click on your App, go to Settings and fill in your public IP-Address including prefixed hhtp:// in the Site URL field
+To leave the development mode, so others can login as well, also fill in a contact email address in the respective field, "Save Changes", click on 'Status & Review'
