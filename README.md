@@ -441,7 +441,7 @@ Enable the virtual host:
 To get the Google+ authorization working:
 Go to the Developer Console: https://console.developers.google.com/ 
 
-Navigate to APIs & auth > Credentials > Edit Settings
+Click on Credentials in the sidebar and then Edit Settings
 
 add your host name and public IP-address to your Authorized JavaScript origins 
 
