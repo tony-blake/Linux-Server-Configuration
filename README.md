@@ -364,6 +364,10 @@ by default ```no remote connections``` are not allowed
 
 configure database_setup.py ```sudo vim database_setup.py```
 
+
+
+## HERE IS WHERE THE ERROR OCCURS - IN MY CURRENT CODE I HAVE A SEPERATE FUNCTION DEFINED FOR THE URL AS WAS ORIGIANLLY FOLLOWING STEVEN WOODINGS REPO WHEREAS THE CURRENT REPO I'M FOLLOWING JUST USES THE FOLLWING LINE AND NO FUNCTION. SO MAYBE I NEED TO CHANGE THAT database_setrup.py file SO THAT IT ONLY HAS THAT LINE INSTEAD OF THE DEFINED FUNCTION? 
+
 ```python engine = create_engine('postgresql://catalog:db-password@localhost/catalog')```
 
 repeat for application.py(main.py)
