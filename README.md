@@ -439,9 +439,14 @@ Enable the virtual host:
 
 
 To get the Google+ authorization working:
-Go to the project on the Developer Console: https://console.developers.google.com/project
+Go to the Developer Console: https://console.developers.google.com/ 
+
 Navigate to APIs & auth > Credentials > Edit Settings
-add your host name and public IP-address to your Authorized JavaScript origins and your host name + oauth2callback to Authorized redirect URIs, e.g. http://ec2-52-25-0-41.us-west-2.compute.amazonaws.com/oauth2callback
+
+add your host name and public IP-address to your Authorized JavaScript origins 
+
+and your host name + oauth2callback to Authorized redirect URIs, e.g. http://ec2-52-25-0-41.us-west-2.compute.amazonaws.com/oauth2callback
+
 To get the Facebook authorization working:
 Go on the Facebook Developers Site to My Apps https://developers.facebook.com/apps/
 Click on your App, go to Settings and fill in your public IP-Address including prefixed hhtp:// in the Site URL field
