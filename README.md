@@ -308,14 +308,25 @@ Create the wsgi file
 
 ```bash
 
-  #!/usr/bin/python
-  import sys
-  import logging
-  logging.basicConfig(stream=sys.stderr)
-  sys.path.insert(0,"/var/www/catalog/")
+#!/usr/bin/python
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0,"/var/www/catalog/")
 
-  from catalog import app as application
-  application.secret_key = 'Add your secret key'
+from catalog import app as application
+application.secret_key = 'Add your secret key'
+  
+application.config['DATABASE_URL'] = 'postgresql://catalog:db-password@localhost/catalog'
+application.config['UPLOAD_FOLDER'] = '/var/www/catalog/catalog/item_images'
+application.config['OAUTH_SECRETS_LOCATION'] = '/var/www/catalog/'
+application.config['ALLOWED_EXTENSIONS'] = set(['pdf', 'jpg', 'jpeg', 'png', 'gif'])
+application.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024  # 4 MB
+
+# Create database and populate it, if not already done so.
+create_db(application.config['DATABASE_URL'])
+populate_database()
+
   
   ```
 save file
