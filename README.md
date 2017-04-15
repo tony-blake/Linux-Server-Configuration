@@ -409,6 +409,13 @@ Quit postgressql `\q`
 
 logout from postgresql super user ```exit```
 
+
+## LOCKED OUT OF USER ACCOUNT THAT'S WHY THERE IS A FATAL ERROR FOR AUTHENTICATION
+```FATAL:  password authentication failed for user "catalog"```
+
+goto the following search page
+https://www.google.ie/search?client=safari&rls=en&q=FATAL:++password+authentication+failed+for+user&ie=UTF-8&oe=UTF-8&gws_rd=cr&ei=tmnxWIXhL8vfgAbY24oo
+
 ##################################################################
 
 
