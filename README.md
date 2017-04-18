@@ -187,278 +187,79 @@ Then select "UTC".
 
 run ``` sudo apt-get install apache2``` 
 
-Type public ip address (54.165.131.195) into URL and check if apache webpage is there (sceenshot)
+Type public ip address (54.165.131.195) into URL and check if apache webpage "it works!" is there 
 
 install mod_wsgi: ```sudo apt-get install libapache2-mod-wsgi```
 
-Next use the WSGI module to configure the apche server to handle requests ```sudo vim /etc/apache2/sites-availible/000-default.conf```
 
-Add ```WSGIScriptAlias / /var/www/html/myapp.wsgi``` before ```</ VirtualHost>```
+## Install and Configure PostgreSQL
 
-Restart Apache ```sudo apache2ctl restart```
+To obtain and install postgresql just run ```sudo apt-get install postgresql postgresql-contrib```
 
-## Restart Error (If it happens)
+Check config file ```/etc/postgresql/9.5/main/pg_hba.conf``` only allows connections from host addresses ``` 127.0.0.1``` for IPv4 and ```::1``` for IPv6. It should look like so
 
-The following error message appears on attempting to restart
-```bash
-AH00558: apache2: Could not reliably determine the servers fully qualified domain name, using 127.0.0.1. 
-Set the ServerName directive globally to suppress this message.
+```bash 
+# Database administrative login by Unix domain socket
+local   all             postgres                                peer
+
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# "local" is for Unix domain socket connections only
+local   all             all                                     peer
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+host    all             all             ::1/128                 md5
+# Allow replication connections from localhost, by a user with the
+# replication privilege.
+#local   replication     postgres                                peer
+#host    replication     postgres        127.0.0.1/32            md5
+#host    replication     postgres        ::1/128                 md5
 ```
 
-To resolve this ``` sudo vim  /etc/apache2/apache2.conf```
-And append the following line ```ServerName localhost```
+Next create a postgresql user called ``` catalog ``` with ```sudo -u postgres createuser -P catalog```
 
-## Application Installation
+When the prompt for a password appaears type ```PASSWORD```
 
-Install Git
-```bash
-sudo apt-get install git
-git config --global user.name "GRADEY"
-git config --global user.email "GRADEY@54.165.131.195.com"
+Then create an empty database called ```catalog``` using ```sudo -u postgres createdb -O catalog catalog```
 
+## Install Flask and all other dependencies
 
+create new file called ```requirements``` like so
 
-```
-## Install python dev and verify WSGI is enabled
+```bash 
+# create new file
+sudo vim requirements
 
-Install python-dev package ```sudo apt-get install python-dev```
-
-Verify wsgi is enabled ```sudo a2enmod wsgi```
-
-
-## Create Flask App
-
-``` cd /var/www ```
-
-```sudo mkdir catalog```
-
-```cd catalog```
-
-```sudo mkdir static templates```
-
-```sudo vim __init__.py```
-```bash
-
- from flask import Flask
-app = Flask(__name__)
-@app.route("/")
-def hello():
-    return "Hello, world (Testing!)"
-if __name__ == "__main__":
-
-```
-
-
-## Install Flask
-
-install flask
-
-```sudo apt-get install python-pip```
-
-```sudo pip install virtualenv```
-
-```sudo virtualenv venv```
-
-```sudo chmod -R 777 venv```
-
-```source venv/bin/activate```
-
-```pip install Flask```
-
-```python __init__.py```
-
-```deactivate```
-
-
-## Configure And Enable New Virtual Host
-
-Create host config file ```sudo vim /etc/apache2/sites-available/catalog.conf```
-
-paste the following:
-
-```bash
-<VirtualHost *:80>
-  ServerName 54.165.131.195
-  ServerAdmin admin@54.165.131.195
-  WSGIScriptAlias / /var/www/catalog/catalog.wsgi
-  <Directory /var/www/catalog/catalog/>
-      Order allow,deny
-      Allow from all
-  </Directory>
-  Alias /static /var/www/catalog/catalog/static
-  <Directory /var/www/catalog/catalog/static/>
-      Order allow,deny
-      Allow from all
-  </Directory>
-  ErrorLog ${APACHE_LOG_DIR}/error.log
-  LogLevel warn
-  CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-```
-    
-save file
-
-Enable `sudo a2ensite catalog`
-
-Create the wsgi file
-
-```cd /var/www/catalog```
-
-```sudo vim catalog.wsgi```
-
-```bash
-
-#!/usr/bin/python
-import sys
-import logging
-logging.basicConfig(stream=sys.stderr)
-sys.path.insert(0,"/var/www/catalog/")
-
-from catalog import app as application
-application.secret_key = 'Add your secret key'
-  
-application.config['DATABASE_URL'] = 'postgresql://catalog:db-password@localhost/catalog'
-application.config['UPLOAD_FOLDER'] = '/var/www/catalog/catalog/item_images'
-application.config['OAUTH_SECRETS_LOCATION'] = '/var/www/catalog/'
-application.config['ALLOWED_EXTENSIONS'] = set(['pdf', 'jpg', 'jpeg', 'png', 'gif'])
-application.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024  # 4 MB
-
-# Create database and populate it, if not already done so.
-create_db(application.config['DATABASE_URL'])
-populate_database()
-
-  
-  ```
-save file
-
-```sudo service apache2 restart```
-
-
-
-```mkdir catalog```
-```sudo mv TrueSophia/Desktop/Sophia/vagrant/catalog/catalog/* catalog/```
-
-Now update (appplication.py ?), fb_clients, g_clients, etc and mv to new catalog folder and check that wsgi file
-
-
-## Make .git inaccessible
-
-from ```cd /var/www/catalog/``` create .htaccess file ```sudo vim .htaccess```
-paste in ```RedirectMatch 404 /\.git```
-save file
-
-## Install Dependencies 
-
-by creating the requirements file ``` sudo vim requirements``` and runnning it ```bash requirements```
-
-```bash
-
-source venv/bin/activate
+# install dependencies 
 sudo apt-get install python-psycopg2 python-flask
 sudo apt-get install python-sqlalchemy python-pip
-sudo pip install --uograde oauth2client
+sudo pip install oauth2client
 sudo pip install requests
 sudo pip install httplib2
-pip install Flask-SQLAlchemy
-sudo pip install sqlalchemy
 sudo pip install flask-seasurf
 ```
+Then run ```bash requirements```
 
+## Install Git and clone catalog app repository 
 
-## Install and configure PostgreSQL:
+```bash
+sudo apt-get install git
+sudo mkdir fullstack-nanodegree-vm
+sudo chown www-data:www-data fullstack-nanodegree-vm/
+sudo -u www-data git clone https://github.com/tony-blake/TrueSophia.git fullstack-nanodegree-vm
+```
 
-Install postgresql ```sudo apt-get install postgresql```
+The www-data user will be used to run the catalog app.
 
-install additional models ```sudo apt-get install postgresql-contrib```
+## Update the OAuth client secrets file
 
-by default ```no remote connections``` are not allowed
+First find host name from IP address
 
-configure database_setup.py ```sudo vim database_setup.py```
-
-
-
-## HERE IS WHERE THE ERROR OCCURS - IN MY CURRENT CODE I HAVE A SEPERATE FUNCTION DEFINED FOR THE URL AS WAS ORIGIANLLY FOLLOWING STEVEN WOODINGS REPO WHEREAS THE CURRENT REPO I'M FOLLOWING JUST USES THE FOLLWING LINE AND NO FUNCTION. SO MAYBE I NEED TO CHANGE THAT database_setrup.py file SO THAT IT ONLY HAS THAT LINE INSTEAD OF THE DEFINED FUNCTION? 
-
-```python engine = create_engine('postgresql://catalog:db-password@localhost/catalog')```
-
-repeat for application.py(main.py)
-
-copy your main app.py file into the init.py file mv app.py __init__.py
-
-Add catalog user ```sudo adduser catalog```
-
-login as postgres super user ```sudo su - postgres```
-
-enter postgresql ```psql```
-
-Create user catalog ```CREATE USER catalog WITH PASSWORD 'db-password'```
-
-Change role of user catalog to createDB ```ALTER USER catalog CREATEDB```
-
-List all users and roles to verify ```\du```
-
-Create new DB "catalog" with own of catalog ```CREATE DATABASE catalog WITH OWNER catalog```;
-
-Connect to database ``\c catalog```
-
-Revoke all rights ```REVOKE ALL ON SCHEMA public FROM public```;
-
-Give accessto only to catalog role ```GRANT ALL ON SCHEMA public TO catalog```;
-
-Quit postgressql `\q`
-
-logout from postgresql super user ```exit```
-
-
-## LOCKED OUT OF USER ACCOUNT THAT'S WHY THERE IS A FATAL ERROR FOR AUTHENTICATION
-```FATAL:  password authentication failed for user "catalog"```
-
-goto the following search page
-https://www.google.ie/search?client=safari&rls=en&q=FATAL:++password+authentication+failed+for+user&ie=UTF-8&oe=UTF-8&gws_rd=cr&ei=tmnxWIXhL8vfgAbY24oo
-
-##################################################################
-
-
-Setup your database schema ```python database_setup.py```
-
-I had problems importing psycopg2 this stack overflow post helped me
-
-retstart apache ```sudo service apache2 restart```
-
-I was getting a ```No such file or directory: 'client_secrets.json'``` error. I fixed using a raw path to the file ```open(r'/var/www/catalog/catalog/client_secrets.json', 'r').read())... ```You'll also need to do this for any other instances of the file path stack overflow
-
-
-#########################################################################
-
-
-## 11.5 - Run application
-
-Restart Apache:
-```$ sudo service apache2 restart```
-
-Open a browser and put in your public ip-address as url, e.g. 54.165.131.195 - if everything works, the application should come up
-*If getting an internal server error, check the Apache error files:
-Source: A2 Hosting
-View the last 20 lines in the error log: ```$ sudo tail -20 /var/log/apache2/error.log````
-*If a file like 'g_client_secrets.json' couldn't been found:
-Source: Stackoverflow
-
-Could not parse file errpr
-
-## 11.6 - Get OAuth-Logins Working
-
-Source: Udacity and Apache
-
-Open http://www.hcidata.info/host2ip.cgi and receive the Host name for your public IP-address, e.g. for 54.165.131.195, its ec2-54-165-131-95.compute-1.amazonaws.com
-Open the Apache configuration files for the web app: ```$ sudo vim /etc/apache2/sites-available/catalog.conf```
-
-Paste in the following line below ServerAdmin:
-```ServerAlias HOSTNAME```, e.g. ```ec2-54-165-131-95.compute-1.amazonaws.com````
-
-Enable the virtual host:
-```$ sudo a2ensite catalog```
-
-
+```bash
+Macintosh-109add6f31eb:~ tonyblake$ host 54.165.131.195
+195.131.165.54.in-addr.arpa domain name pointer ec2-54-165-131-195.compute-1.amazonaws.com
+```
 
 To get the Google+ authorization working:
 Go to the Developer Console: https://console.developers.google.com/ 
@@ -467,63 +268,211 @@ Click on Credentials in the sidebar and then click edit icon on the far right of
 
 add your host name and public IP-address to your Authorized JavaScript origins 
 
-and your host name + oauth2callback to Authorized redirect URIs, e.g. http://ec2-52-25-0-41.us-west-2.compute.amazonaws.com/oauth2callback
+and your host name + oauth2callback to Authorized redirect URIs, e.g. http://ec2-54-165-131-195.compute-1.amazonaws.com/oauth2callback
+
+Download new json and paste contents into new file ```g_client_secrets.json``` 
 
 To get the Facebook authorization working:
 Go on the Facebook Developers Site to My Apps https://developers.facebook.com/apps/
 Click on your App, go to Settings and fill in your public IP-Address including prefixed hhtp:// in the Site URL field
-To leave the development mode, so others can login as well, also fill in a contact email address in the respective field, "Save Changes", click on 'Status & Review'11.5 - Run application
+To leave the development mode, so others can login as well, also fill in a contact email address in the respective field, "Save Changes"
 
-Restart Apache:
-$ sudo service apache2 restart
-Open a browser and put in your public ip-address as url, e.g. 52.25.0.41 - if everything works, the application should come up
-*If getting an internal server error, check the Apache error files:
-Source: A2 Hosting
-View the last 20 lines in the error log: $ sudo tail -20 /var/log/apache2/error.log
-*If a file like 'g_client_secrets.json' couldn't been found:
-Source: Stackoverflow
-11.6 - Get OAuth-Logins Working
+## Organise folder hierarchy and updated files to match paths in virtual host config file
 
-Source: Udacity and Apache
+```bash
 
-Open http://www.hcidata.info/host2ip.cgi and receive the Host name for your public IP-address, e.g. for 52.25.0.41, its ec2-52-25-0-41.us-west-2.compute.amazonaws.com
-Open the Apache configuration files for the web app: $ sudo vim /etc/apache2/sites-available/catalog.conf
-Paste in the following line below ServerAdmin:
-ServerAlias HOSTNAME, e.g. ec2-52-25-0-41.us-west-2.compute.amazonaws.com
-Enable the virtual host:
-$ sudo a2ensite catalog
-To get the Google+ authorization working:
-Go to the project on the Developer Console: https://console.developers.google.com/project
-Navigate to APIs & auth > Credentials > Edit Settings
-add your host name and public IP-address to your Authorized JavaScript origins and your host name + oauth2callback to Authorized redirect URIs, e.g. http://ec2-52-25-0-41.us-west-2.compute.amazonaws.com/oauth2callback
-To get the Facebook authorization working:
-Go on the Facebook Developers Site to My Apps https://developers.facebook.com/apps/
-Click on your App, go to Settings and fill in your public IP-Address including prefixed hhtp:// in the Site URL field
-To leave the development mode, so others can login as well, also fill in a contact email address in the respective field, "Save Changes", click on 'Status & Review'11.5 - Run application
+cd fullstack-nanodegree-vm/
+ls
+cd ..
+cp -r fullstack-nanodegree-vm/Desktop/Sophia/* fullstack-nanodegree-vm/
+sudo cp -r fullstack-nanodegree-vm/Desktop/Sophia/* fullstack-nanodegree-vm/
+cd fullstack-nanodegree-vm/
+ls
+rm -fr Desktop/
+sudo rm -fr Desktop/
+sudo rm README.md
+cd ..
+ls
+cd fullstack-nanodegree-vm/
+ls
+cd vagrant/
+ls
+cd catalog/
+ls
+sudo vim catalog.wsgi
+cd ..
+cp g_client_secrets.json /var/www/catalog/fullstack-nanodegree-vm/vagrant/catalog/
+sudo cp g_client_secrets.json /var/www/catalog/fullstack-nanodegree-vm/vagrant/catalog/
+sudo cp fb_client_secrets.json /var/www/catalog/fullstack-nanodegree-vm/vagrant/catalog/
+cd /var/www/catalog/
+rm -fr TrueSophia/
+cd /var/www/
+ls
+sudo mkdir fullstack-nanodegree-vm
+cd catalog/
+ls
+cp requirements /var/www/catalog/fullstack-nanodegree-vm/vagrant/catalog/
+sudo cp requirements /var/www/catalog/fullstack-nanodegree-vm/vagrant/catalog/
+cd fullstack-nanodegree-vm/
+ls
+cd ..
+ls
+sudo chown www-data:www-data fullstack-nanodegree-vm/
+sudo cp -r catalog/fullstack-nanodegree-vm/* fullstack-nanodegree-vm/
+sudo rm -fr catalog/
+ls
+cd fullstack-nanodegree-vm/
+ls
+cd vagrant/
+ls
+cd catalog/
+ls
+sudo vim catalog.wsgi
+ls
+sudo vim application.py
+sudo vim /etc/apache2/sites-available/catalog-app.conf
+cd /etc/apache2/sites-available/
+ls
+sudo a2dissite 000-default.conf
+sudo a2ensite catalog-app.conf
+sudo service apache reload
+sudo service apache2 reload
+sudo service apache2 restart
+```
 
-Restart Apache:
-$ sudo service apache2 restart
-Open a browser and put in your public ip-address as url, e.g. 52.25.0.41 - if everything works, the application should come up
-*If getting an internal server error, check the Apache error files:
-Source: A2 Hosting
-View the last 20 lines in the error log: $ sudo tail -20 /var/log/apache2/error.log
-*If a file like 'g_client_secrets.json' couldn't been found:
-Source: Stackoverflow
-11.6 - Get OAuth-Logins Working
+## Update catalog.wsgi
 
-Source: Udacity and Apache
+To get the application to run the catalog.wsgi file needs to know the location of the catalog app files. So change contents of the old catalog.wsgi to the follwing
 
-Open http://www.hcidata.info/host2ip.cgi and receive the Host name for your public IP-address, e.g. for 52.25.0.41, its ec2-52-25-0-41.us-west-2.compute.amazonaws.com
-Open the Apache configuration files for the web app: $ sudo vim /etc/apache2/sites-available/catalog.conf
-Paste in the following line below ServerAdmin:
-ServerAlias HOSTNAME, e.g. ec2-52-25-0-41.us-west-2.compute.amazonaws.com
-Enable the virtual host:
-$ sudo a2ensite catalog
-To get the Google+ authorization working:
-Go to the project on the Developer Console: https://console.developers.google.com/project
-Navigate to APIs & auth > Credentials > Edit Settings
-add your host name and public IP-address to your Authorized JavaScript origins and your host name + oauth2callback to Authorized redirect URIs, e.g. http://ec2-52-25-0-41.us-west-2.compute.amazonaws.com/oauth2callback
-To get the Facebook authorization working:
-Go on the Facebook Developers Site to My Apps https://developers.facebook.com/apps/
-Click on your App, go to Settings and fill in your public IP-Address including prefixed hhtp:// in the Site URL field
-To leave the development mode, so others can login as well, also fill in a contact email address in the respective field, "Save Changes", click on 'Status & Review'
+```bash
+#!/usr/bin/python
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0, '/var/www/fullstack-nanodegree-vm/vagrant/catalog')
+
+from catalog import app as application
+from catalog.database_setup import create_db
+from catalog.populate_database import populate_database
+
+application.secret_key = 'super_secret_key'  # This needs changing in production env
+
+application.config['DATABASE_URL'] = 'postgresql://catalog:PASSWORD@localhost/catalog'
+application.config['UPLOAD_FOLDER'] = '/var/www/fullstack-nanodegree-vm/vagrant/catalog/item_images'
+application.config['OAUTH_SECRETS_LOCATION'] = '/var/www/fullstack-nanodegree-vm/vagrant/catalog/'
+application.config['ALLOWED_EXTENSIONS'] = set(['pdf','jpg', 'jpeg', 'png', 'gif'])
+application.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024  # 4 MB
+
+# Create database and populate it, if not already done so.
+create_db(application.config['DATABASE_URL'])
+populate_database()
+```
+
+## Configure Apache2 to run catalog application
+
+A virtual host configuration file needs to be created in the directory ```/etc/apache2/sites-available/```
+called ```catalog-app.conf```
+
+And it should have the follwoing contents 
+
+```bash
+<VirtualHost *:80>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+        #ServerName www.example.com
+
+        ServerAdmin webmaster@localhost
+        ServerName 54.165.131.195
+
+        ServerAlias ec2-54-165-131-195.compute-1.amazonaws.com
+
+
+        # Define WSGI parameters. The daemon process runs as the www-data user.
+        WSGIDaemonProcess catalog user=www-data group=www-data threads=5
+        WSGIProcessGroup catalog
+        WSGIApplicationGroup %{GLOBAL}
+
+        # Define the location of the app's WSGI file
+        WSGIScriptAlias / /var/www/fullstack-nanodegree-vm/vagrant/catalog/catalog.wsgi
+
+        # Allow Apache to serve the WSGI app from the catalog app directory
+        <Directory /var/www/fullstack-nanodegree-vm/vagrant/catalog/>
+                Require all granted
+        </Directory>
+
+        # Setup the static directory (contains CSS, Javascript, etc.)
+        Alias /static /var/www/fullstack-nanodegree-vm/vagrant/catalog/catalog/static
+
+        # Allow Apache to serve the files from the static directory
+        <Directory  /var/www/fullstack-nanodegree-vm/vagrant/catalog/catalog/static/>
+                Require all granted
+        </Directory>
+
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        LogLevel warn
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+Disable the default virtual host with ```sudo a2dissite 000-default.conf```
+
+Then enable the catalog app virtual host ```sudo a2ensite catalog-app.conf```
+
+
+## Finally run application!
+
+restart apache server ```sudo service apache reload```
+
+load webpage by pasting URL ```ec2-54-165-131-95.compute-1.amazonaws.com``` into web browser 
+
+## Addressing "internal server error" complaint if webpage does not load
+
+All errors are placed in the log file which can be viewed (last 20 lines of file) using 
+
+```sudo tail -20 /var/log/apache2/error.log```
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Next use the WSGI module to configure the apche server to handle requests ```sudo vim /etc/apache2/sites-availible/000-default.conf```
+
+Add ```WSGIScriptAlias / /var/www/html/myapp.wsgi``` before ```</ VirtualHost>```
+
+Restart Apache ```sudo apache2ctl restart```
+
