@@ -470,9 +470,4 @@ All errors are placed in the log file which can be viewed (last 20 lines of file
 
 
 
-Next use the WSGI module to configure the apche server to handle requests ```sudo vim /etc/apache2/sites-availible/000-default.conf```
-
-Add ```WSGIScriptAlias / /var/www/html/myapp.wsgi``` before ```</ VirtualHost>```
-
-Restart Apache ```sudo apache2ctl restart```
 
