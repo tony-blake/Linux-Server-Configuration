@@ -18,7 +18,7 @@ Description
 
 ## Steps to login for grader
 * Open up a terminal window and type ```ssh -v grader@54.165.131.195 -p 2220```
-* When prompted  for the password the ssh key ```id_rsa``` type ```Passw0rd1```  
+* When prompted  for the password for the ssh key ```id_rsa``` type ```Passw0rd1```  
 * The password when using ```sudo``` is ```Passw0rd```
 
 
