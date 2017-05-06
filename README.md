@@ -9,11 +9,6 @@ Description
 ## Information for Grader
 
 * contents of private RSA file
-
-````bash
-```
-
-
 * IP address of server - 54.165.131.195
 * Username for grader - "grader"
 * Password for grader - "Passw0rd1"
