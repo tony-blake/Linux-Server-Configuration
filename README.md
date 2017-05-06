@@ -6,7 +6,7 @@ Description
 
 **LinuxServerConfiguration** outlines the steps involved in configuring an online Linux server to host a web application. It is the final project in the Full Stack Web Developer Nanodegree
 
-## Information for Grader
+## Information for grader
 
 * contents of private RSA file is in ```LightsailDefaultPrivateKey.pem```
 * IP address of server - 54.165.131.195
@@ -18,8 +18,8 @@ Description
 
 ## Steps to login for grader
 * Open up a terminal window and type ```ssh -v grader@54.165.131.195 -p 2220```
-* When prompted for the id_rsa password type ```Passw0rd1``` where 0 is number zero. 
-* The password when using ```sudo``` is ```Passw0rd``` where 0 is the number zero
+* When prompted for the id_rsa password type ```Passw0rd1``` . 
+* The password when using ```sudo``` is ```Passw0rd```.
 
 
 
