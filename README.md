@@ -4,11 +4,11 @@ LinuxServerConfiguration
 Description
 -----------
 
-**LinuxServerConfiguration** outlines the steps involved in configuring an online Linux server to host a web application. It os the final project in the Full Stack Web Developer Nanodegree
+**LinuxServerConfiguration** outlines the steps involved in configuring an online Linux server to host a web application. It is the final project in the Full Stack Web Developer Nanodegree
 
 ## Information for Grader
 
-* contents of private RSA file is in LightsailDefaultPrivateKey.pem
+* contents of private RSA file is in ```LightsailDefaultPrivateKey.pem```
 * IP address of server - 54.165.131.195
 * Username for grader - "grader"
 * Server login password for grader - "Passw0rd1"
