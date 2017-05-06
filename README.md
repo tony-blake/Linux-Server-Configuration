@@ -12,14 +12,14 @@ Description
 * IP address of server - 54.165.131.195
 * Username for grader - "grader"
 * Server login password for grader - "Passw0rd1"
-* Pasw0rd for sudo access - "Passw0rd"
+* Pasword for sudo access - "Passw0rd"
 * Port - 2200
 * URL - http://ec2-54-165-131-195.compute-1.amazonaws.com
 
 ## Steps to login for grader
-* Open up a terminal window and type ```ssh -v grader@54.165.131.195 -p 2220
+* Open up a terminal window and type ```ssh -v grader@54.165.131.195 -p 2220```
 * When prompted for the id_rsa password type ```Passw0rd1``` where 0 is number zero. 
-* The passw0rd when using ```sudo``` is ```Passw0rd``` where 0 is the number zero
+* The password when using ```sudo``` is ```Passw0rd``` where 0 is the number zero
 
 
 
