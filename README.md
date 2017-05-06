@@ -8,9 +8,9 @@ Description
 
 ## Information for Grader
 
-* IP address - 54.165.131.195
+* IP address - http://54.165.131.195
 * Port - 2200
-* URL - ec2-54-165-131-95.compute-1.amazonaws.com
+* URL - http://ec2-54-165-131-195.compute-1.amazonaws.com
 
 
 ## Obtain access to virtual server
@@ -434,7 +434,7 @@ Then enable the catalog app virtual host ```sudo a2ensite catalog-app.conf```
 
 restart apache server ```sudo service apache reload```
 
-load webpage by pasting URL ```ec2-54-165-131-95.compute-1.amazonaws.com``` into web browser 
+load webpage by pasting URL ```ec2-54-165-131-195.compute-1.amazonaws.com``` into web browser 
 
 ## Addressing "internal server error" complaint if webpage does not load
 
