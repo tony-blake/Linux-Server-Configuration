@@ -8,7 +8,16 @@ Description
 
 ## Information for Grader
 
-* IP address - http://54.165.131.195
+* contents of private RSA file
+
+````bash
+
+
+
+* IP address of server - 54.165.131.195
+* Username for grader - "grader"
+* Password for grader - "Passw0rd1"
+* Pasw0rd for sudo access - "Passw0rd"
 * Port - 2200
 * URL - http://ec2-54-165-131-195.compute-1.amazonaws.com
 
