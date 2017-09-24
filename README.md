@@ -9,7 +9,7 @@ Description
 ## Information for grader
 
 * contents of private RSA file is in ```LightsailDefaultPrivateKey.pem```
-* IP address of server - 54.165.131.195
+* IP address of server - 34.240.178.153
 * Username for grader - "grader"
 * Server login password for grader - "Passw0rd1"
 * Pasword for sudo access - "Passw0rd"
@@ -17,7 +17,7 @@ Description
 * URL - http://ec2-54-165-131-195.compute-1.amazonaws.com
 
 ## Steps to login for grader
-* Open up a terminal window and type ```ssh -v grader@54.165.131.195 -p 2220```
+* Open up a terminal window and type ```ssh -v grader@34.240.178.153 -p 2220```
 * When prompted  for the password for the ssh key ```id_rsa``` type ```Passw0rd1```  
 * The password when using ```sudo``` is ```Passw0rd```
 
@@ -35,7 +35,7 @@ Log into server.
 ```bash
 mv ~/Downloads/LightsailDefaultPrivateKey.pem ~/.ssh/
 chmod 600 ~/.ssh/LightsailDefaultPrivateKey.pem 
-ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@54.165.131.195
+ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@52.214.113.36
 
 ```
 
@@ -125,25 +125,26 @@ On local machine generate SSH key pair by running command ``` ssh-keygen ```
 Last login: Thu Mar 23 23:04:51 on ttys000
 Macintosh-109add6f31eb:~ tonyblake$ ssh-keygen
 Generating public/private rsa key pair.
-Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa
+Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa4
 Enter passphrase (empty for no passphrase): 
 Enter same passphrase again: 
-Your identification has been saved in /Users/tonyblake/.ssh/id_rsa.
-Your public key has been saved in /Users/tonyblake/.ssh/id_rsa.pub.
+Your identification has been saved in /Users/tonyblake/.ssh/id_rsa4.
+Your public key has been saved in /Users/tonyblake/.ssh/id_rsa4.pub.
 The key fingerprint is:
-6a:da:e8:78:ff:39:75:60:70:5f:4f:98:db:00:dd:f2 tonyblake@Macintosh-109add6f31eb.local
+49:ae:6d:9f:14:92:fd:1a:0d:1d:7f:e9:4b:e2:75:78 tonyblake@Macintosh-109add6f31eb.local
 The key's randomart image is:
 +--[ RSA 2048]----+
-|            .o + |
-|        . .   B o|
-|         o . . O |
-|          o . . E|
-|        S. .     |
-|       .  . .    |
-|      o  . .     |
-|   ..=  ..       |
-|  .o+.o.o.       |
+|                 |
+|                 |
+|        .   .    |
+|       o + . o  .|
+|        S + . ...|
+|       o . =  .o |
+|      . o o o..+E|
+|       . o +. +.o|
+|          +  . . |
 +-----------------+
+
 Macintosh-109add6f31eb:~ tonyblake$ 
 
 ```
@@ -229,7 +230,7 @@ host    all             all             ::1/128                 md5
 
 Next create a postgresql user called ``` catalog ``` with ```sudo -u postgres createuser -P catalog```
 
-When the prompt for a password appaears type ```PASSWORD```
+When the prompt for a password appaears type ```Passw0rd```
 
 Then create an empty database called ```catalog``` using ```sudo -u postgres createdb -O catalog catalog```
 
