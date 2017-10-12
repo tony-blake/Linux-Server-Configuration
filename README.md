@@ -9,7 +9,7 @@ Description
 ## Information for grader
 
 * contents of private RSA file is in ```LightsailDefaultPrivateKey.pem```
-* IP address of server - 34.240.178.153
+* IP address of server - 52.210.33.125
 * Username for grader - "grader"
 * Server login password for grader - "Passw0rd1"
 * Pasword for sudo access - "Passw0rd"
@@ -17,7 +17,7 @@ Description
 * URL - http://ec2-54-165-131-195.compute-1.amazonaws.com
 
 ## Steps to login for grader
-* Open up a terminal window and type ```ssh -v grader@34.240.178.153 -p 2220```
+* Open up a terminal window and type ```ssh -v grader@52.210.33.125 -p 2220```
 * When prompted  for the password for the ssh key ```id_rsa``` type ```Passw0rd1```  
 * The password when using ```sudo``` is ```Passw0rd```
 
@@ -35,7 +35,7 @@ Log into server.
 ```bash
 mv ~/Downloads/LightsailDefaultPrivateKey.pem ~/.ssh/
 chmod 600 ~/.ssh/LightsailDefaultPrivateKey.pem 
-ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@52.214.113.36
+ssh -i ~/.ssh/LightsailDefaultPrivateKey.pem ubuntu@52.210.33.125
 
 ```
 
@@ -122,28 +122,29 @@ Then save file by hitting ``` ctrl + x ``` and selecting Yes.
 On local machine generate SSH key pair by running command ``` ssh-keygen ```
 
 ```bash
-Last login: Thu Mar 23 23:04:51 on ttys000
+Last login: Thu Oct 12 10:42:47 on ttys001
 Macintosh-109add6f31eb:~ tonyblake$ ssh-keygen
 Generating public/private rsa key pair.
-Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa4
+Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsaOct17        
 Enter passphrase (empty for no passphrase): 
 Enter same passphrase again: 
-Your identification has been saved in /Users/tonyblake/.ssh/id_rsa4.
-Your public key has been saved in /Users/tonyblake/.ssh/id_rsa4.pub.
+Your identification has been saved in /Users/tonyblake/.ssh/id_rsaOct17.
+Your public key has been saved in /Users/tonyblake/.ssh/id_rsaOct17.pub.
 The key fingerprint is:
-49:ae:6d:9f:14:92:fd:1a:0d:1d:7f:e9:4b:e2:75:78 tonyblake@Macintosh-109add6f31eb.local
+29:f0:fe:7b:58:12:5c:72:38:c2:c8:55:e4:b1:a8:ad tonyblake@Macintosh-109add6f31eb.local
 The key's randomart image is:
 +--[ RSA 2048]----+
-|                 |
-|                 |
-|        .   .    |
-|       o + . o  .|
-|        S + . ...|
-|       o . =  .o |
-|      . o o o..+E|
-|       . o +. +.o|
-|          +  . . |
+|   . +.o+.       |
+|    o oo+oo      |
+|    . .oo=       |
+|     =  o.       |
+|    . + S.       |
+|     o .. .      |
+|    E .  +       |
+|       .. .      |
+|        oo       |
 +-----------------+
+
 
 Macintosh-109add6f31eb:~ tonyblake$ 
 
