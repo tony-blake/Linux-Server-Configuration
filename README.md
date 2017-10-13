@@ -122,30 +122,30 @@ Then save file by hitting ``` ctrl + x ``` and selecting Yes.
 On local machine generate SSH key pair by running command ``` ssh-keygen ```
 
 ```bash
-Last login: Thu Oct 12 10:42:47 on ttys001
+Last login: Fri Oct 13 10:39:20 on ttys000
+Macintosh-109add6f31eb:~ tonyblake$ ssh-keygen
 Generating public/private rsa key pair.
-Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa12Oct17
+Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa13Oct17
 Enter passphrase (empty for no passphrase): 
 Enter same passphrase again: 
-Your identification has been saved in /Users/tonyblake/.ssh/id_rsa12Oct17.
-Your public key has been saved in /Users/tonyblake/.ssh/id_rsa12Oct17.pub.
+Your identification has been saved in /Users/tonyblake/.ssh/id_rsa13Oct17.
+Your public key has been saved in /Users/tonyblake/.ssh/id_rsa13Oct17.pub.
 The key fingerprint is:
-ae:ea:95:98:c8:d7:0d:d9:25:79:8b:ad:58:ab:86:09 tonyblake@Macintosh-109add6f31eb.local
+71:99:30:a8:d5:1f:a2:42:6f:24:1d:38:13:44:24:95 tonyblake@Macintosh-109add6f31eb.local
 The key's randomart image is:
 +--[ RSA 2048]----+
+|  .=*=.+o        |
+|   .E = oo.o     |
+|   . O ..o+.     |
+|    o +  o.      |
+|     o  S        |
 |                 |
-|         .       |
-|        o o      |
-|       o * .     |
-|      o S o      |
-| .E. + B o       |
-|  o.+o= =        |
-|   .o..o         |
-|   .ooo          |
+|                 |
+|                 |
+|                 |
 +-----------------+
-
-
 Macintosh-109add6f31eb:~ tonyblake$ 
+
 
 ```
 
