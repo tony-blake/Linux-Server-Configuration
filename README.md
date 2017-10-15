@@ -122,29 +122,34 @@ Then save file by hitting ``` ctrl + x ``` and selecting Yes.
 On local machine generate SSH key pair by running command ``` ssh-keygen ```
 
 ```bash
-Last login: Fri Oct 13 10:39:20 on ttys000
+Last login: Sun Oct 15 13:58:05 on ttys000
 Macintosh-109add6f31eb:~ tonyblake$ ssh-keygen
 Generating public/private rsa key pair.
-Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa13Oct17
+Enter file in which to save the key (/Users/tonyblake/.ssh/id_rsa): /Users/tonyblake/.ssh/id_rsa15Oct17
 Enter passphrase (empty for no passphrase): 
 Enter same passphrase again: 
-Your identification has been saved in /Users/tonyblake/.ssh/id_rsa13Oct17.
-Your public key has been saved in /Users/tonyblake/.ssh/id_rsa13Oct17.pub.
+Your identification has been saved in /Users/tonyblake/.ssh/id_rsa15Oct17.
+Your public key has been saved in /Users/tonyblake/.ssh/id_rsa15Oct17.pub.
 The key fingerprint is:
-71:99:30:a8:d5:1f:a2:42:6f:24:1d:38:13:44:24:95 tonyblake@Macintosh-109add6f31eb.local
+d6:80:03:89:92:82:d6:fe:a0:c5:65:12:d8:d9:e9:a9 tonyblake@Macintosh-109add6f31eb.local
 The key's randomart image is:
 +--[ RSA 2048]----+
-|  .=*=.+o        |
-|   .E = oo.o     |
-|   . O ..o+.     |
-|    o +  o.      |
-|     o  S        |
-|                 |
+|..+o=..          |
+|=o.=.* .         |
+|o.o = + .        |
+|   = o . o       |
+|  o +   S .      |
+| . E . .         |
 |                 |
 |                 |
 |                 |
 +-----------------+
+Macintosh-109add6f31eb:~ tonyblake$ cat ~/.ssh/id_rsa15Oct17.pub 
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCvmBuanE5+Yj+op9dygZG9KHvnWFrAY3qQxOZ4mOFlHWPt+jgtkpOLyc9K77zEqKlSsxMs9Mf79ygWJaFBUyto27jt6ctKP3AuG9hfRPk7S6C4B+p+hx3nwjryYcbIA1Muss8U7iUW540fp7ueszzGiw5qiz7KZf60IuuOOlLf7KGvE3LJ6FUUosMZTI4/aSocmY4pzmVADjdOjkkXDgufcX6vCz33toQj+6zixwTpiIHW49sXmDIL2VVv9Zt6BPw/8h0WVAWEDrfrYsq+wlMLaLg7KSrYTZr1b1EOb6xdQxBib234WTuZeaNLA8BcvIbDTKAP0WNMUPmYGzJ/a2cv tonyblake@Macintosh-109add6f31eb.local
+Macintosh-109add6f31eb:~ tonyblake$ host 34.251.221.153
+153.221.251.34.in-addr.arpa domain name pointer ec2-34-251-221-153.eu-west-1.compute.amazonaws.com.
 Macintosh-109add6f31eb:~ tonyblake$ 
+
 
 
 ```
